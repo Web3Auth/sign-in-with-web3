@@ -1,6 +1,6 @@
 {
   "name": "@web3auth/sign-in-with-web3",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "",
   "main": "dist/signInWithWeb3.cjs.js",
   "module": "dist/signInWithWeb3.esm.js",
@@ -25,8 +25,9 @@
   },
   "homepage": "https://github.com/torusresearch/sign-in-with-web3#readme",
   "dependencies": {
+    "@stablelib/random": "^1.0.1",
     "@web3auth/sign-in-with-solana": "file:./local_packages/web3auth-sign-in-with-solana-0.0.3.tgz",
-    "@web3auth/sign-in-with-starkware": "file:./local_packages/web3auth-sign-in-with-starkware-0.0.1.tgz",
+    "@web3auth/sign-in-with-starkware": "file:./local_packages/web3auth-sign-in-with-starkware-0.0.2.tgz",
     "eslint-plugin-mocha": "^10.0.4"
   },
   "devDependencies": {

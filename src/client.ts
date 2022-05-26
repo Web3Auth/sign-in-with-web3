@@ -1,15 +1,15 @@
+import { randomStringForEntropy } from "@stablelib/random";
+import { SIWS } from "@web3auth/sign-in-with-solana";
+import { SIWStarkware } from "@web3auth/sign-in-with-starkware";
 
-import { Payload as SolanaPayload, SIWS } from "@web3auth/sign-in-with-solana";
-import { Payload as StarkwarePayload, SIWStarkware } from "@web3auth/sign-in-with-starkware";
-import { Header, Payload, Signature, SignInWithWeb3Response, VerifyParams } from "./types";
+import { VerifyParams } from "./types";
 
 export class SIWW {
-  
-  header: Header;
+  header: any;
 
-  payload: Payload;
+  payload: any;
 
-  signature: Signature;
+  signature: any;
 
   network: string;
 
@@ -19,20 +19,31 @@ export class SIWW {
    * Creates a parsed Sign-In with Ethereum Message object from a
    * string or an object. If a string is used an parser is called to
    * validate the parameter, otherwise the fields are attributed.
-   * @param param {string | SIWW} Sign message as a string or an object.
+   * @param param {SIWW} Sign message as a string or an object.
    */
-  constructor(param: string | Partial<SIWW>) {
-    switch (this.network) {
+  constructor(param: Partial<SIWW>) {
+    switch (param.network) {
       case "solana": {
-        var networkPayload = new SolanaPayload();
-        Object.assign(networkPayload, this.payload);
-        this.networkStruct = new SIWS({payload: networkPayload});
+        const networkPayload: Partial<SIWS> = { header: param.header, payload: param.payload, signature: param.signature };
+        Object.assign(this, param);
+        this.networkStruct = new SIWS(networkPayload);
+        break;
       }
       case "starkware": {
-        var networkPayload = new StarkwarePayload();
-        Object.assign(networkPayload, this.payload);
-        this.networkStruct = new SIWStarkware({payload: networkPayload});
-      } 
+        const networkPayload: Partial<SIWStarkware> = { header: param.header, payload: param.payload, signature: param.signature };
+        Object.assign(this, param);
+        this.networkStruct = new SIWStarkware(networkPayload);
+        break;
+      }
+    }
+    if (typeof this.payload.chainId === "string") {
+      this.payload.chainId = parseInt(this.payload.chainId);
+    }
+    if (!this.payload.nonce) {
+      this.payload.nonce = randomStringForEntropy(96);
+    }
+    if (!this.payload.issuedAt) {
+      this.payload.issuedAt = new Date().toISOString();
     }
   }
 
@@ -75,9 +86,7 @@ export class SIWW {
    * @param params Parameters to verify the integrity of the message, signature is required.
    * @returns {Promise<SignInWithWeb3Response>} This object if valid.
    */
-  async verify(params: VerifyParams): Promise<SignInWithWeb3Response> {
-    return new Promise<SignInWithWeb3Response>((resolve) => {
-      return this.networkStruct.verify(params);
-    });
+  async verify(params: VerifyParams): Promise<any> {
+    return this.networkStruct.verify(params).then();
   }
 }
