@@ -1,0 +1,67 @@
+{
+  "name": "@web3auth/sign-in-with-web3",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/signInWithWeb3.cjs.js",
+  "module": "dist/signInWithWeb3.esm.js",
+  "unpkg": "dist/signInWithWeb3.umd.min.js",
+  "jsdelivr": "dist/signInWithWeb3.umd.min.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "dev": "rimraf dist/ && cross-env NODE_ENV=development torus-scripts build",
+    "build": "rimraf dist/ && cross-env NODE_ENV=production torus-scripts build",
+    "lint:ts": "eslint --fix 'src/**/*.ts'",
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/torusresearch/sign-in-with-web3.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/torusresearch/sign-in-with-web3/issues"
+  },
+  "homepage": "https://github.com/torusresearch/sign-in-with-web3#readme",
+  "dependencies": {
+    "@web3auth/sign-in-with-solana": "file:./local_packages/web3auth-sign-in-with-solana-0.0.3.tgz",
+    "@web3auth/sign-in-with-starkware": "file:./local_packages/web3auth-sign-in-with-starkware-0.0.1.tgz",
+    "eslint-plugin-mocha": "^10.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.17.3",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@babel/register": "^7.17.7",
+    "@toruslabs/eslint-config-typescript": "^0.2.1",
+    "@toruslabs/torus-scripts": "^1.0.3",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.25",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.13.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^25.0.0",
+    "eslint-plugin-n": "^15.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-tsdoc": "^0.2.16",
+    "jest": "^27.3.1",
+    "loglevel": "^1.8.0",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "tsconfig-paths": "^3.14.1",
+    "typescript": "^4.6.3"
+  },
+  "files": [
+    "dist",
+    "src"
+  ]
+}
