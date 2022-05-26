@@ -1,3 +1,4 @@
+import { SignInWithEthereumError } from "@web3auth/sign-in-with-ethereum";
 import { SignInWithSolanaError, SIWS } from "@web3auth/sign-in-with-solana";
 import { SignInWithStarkwareError, SIWStarkware } from "@web3auth/sign-in-with-starkware";
 
@@ -15,7 +16,7 @@ export interface SignInWithWeb3Response {
   success: boolean;
 
   /** If present `success` MUST be false and will provide extra information on the failure reason. */
-  error?: SignInWithSolanaError | SignInWithStarkwareError;
+  error?: SignInWithSolanaError | SignInWithStarkwareError | SignInWithEthereumError;
 
   /** Original message that was verified. */
   data: SIWS | SIWStarkware;

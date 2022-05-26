@@ -1,4 +1,5 @@
 import { randomStringForEntropy } from "@stablelib/random";
+import { SIWE } from "@web3auth/sign-in-with-ethereum";
 import { SIWS } from "@web3auth/sign-in-with-solana";
 import { SIWStarkware } from "@web3auth/sign-in-with-starkware";
 
@@ -13,7 +14,7 @@ export class SIWW {
 
   network: string;
 
-  networkStruct: SIWS | SIWStarkware;
+  networkStruct: SIWS | SIWStarkware | SIWE;
 
   /**
    * Creates a parsed Sign-In with Ethereum Message object from a
@@ -33,6 +34,12 @@ export class SIWW {
         const networkPayload: Partial<SIWStarkware> = { header: param.header, payload: param.payload, signature: param.signature };
         Object.assign(this, param);
         this.networkStruct = new SIWStarkware(networkPayload);
+        break;
+      }
+      case "ethereum": {
+        const networkPayload: Partial<SIWE> = { header: param.header, payload: param.payload, signature: param.signature };
+        Object.assign(this, param);
+        this.networkStruct = new SIWE(networkPayload);
         break;
       }
     }
