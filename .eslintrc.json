@@ -14,6 +14,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "@typescript-eslint/no-throw-literal": "error"
+    "@typescript-eslint/no-throw-literal": "error",
+    "no-console": "off"
   }
 }

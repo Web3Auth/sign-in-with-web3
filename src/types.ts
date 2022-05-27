@@ -1,5 +1,12 @@
+import { SignInWithEthereumError } from "@web3auth/sign-in-with-ethereum";
 import { SignInWithSolanaError, SIWS } from "@web3auth/sign-in-with-solana";
 import { SignInWithStarkwareError, SIWStarkware } from "@web3auth/sign-in-with-starkware";
+
+export interface VerifyParams {
+  payload: any;
+  signature: any;
+  kp: any;
+}
 
 export class SignatureMeta {}
 
@@ -8,7 +15,7 @@ export class Signature {
 
   m?: SignatureMeta; // signature related metadata (optional)
 
-  s: string; // signature
+  s: any; // signature
 }
 
 export class Header {
@@ -62,53 +69,6 @@ export class Payload {
   resources?: Array<string>;
 }
 
-export enum ErrorTypes {
-  /** `expirationTime` is present and in the past. */
-  EXPIRED_MESSAGE = "Expired message.",
-
-  /** `domain` is not a valid authority or is empty. */
-  INVALID_DOMAIN = "Invalid domain.",
-
-  /** `domain` don't match the domain provided for verification. */
-  DOMAIN_MISMATCH = "Domain do not match provided domain for verification.",
-
-  /** `nonce` don't match the nonce provided for verification. */
-  NONCE_MISMATCH = "Nonce do not match provided nonce for verification.",
-
-  /** `address` is not a valid address. */
-  INVALID_ADDRESS = "Invalid address.",
-
-  /** `uri` does not conform to RFC 3986. */
-  INVALID_URI = "URI does not conform to RFC 3986.",
-
-  /** `nonce` is smaller then 8 characters or is not alphanumeric */
-  INVALID_NONCE = "Nonce size smaller then 8 characters or is not alphanumeric.",
-
-  /** `notBefore` is present and in the future. */
-  NOT_YET_VALID_MESSAGE = "Message is not valid yet.",
-
-  /** Signature doesn't match the address of the message. */
-  INVALID_SIGNATURE = "Signature do not match address of the message.",
-
-  /** `expirationTime`, `notBefore` or `issuedAt` not complient to ISO-8601. */
-  INVALID_TIME_FORMAT = "Invalid time format.",
-
-  /** `version` is not 1. */
-  INVALID_MESSAGE_VERSION = "Invalid message version.",
-
-  /** Thrown when some required field is missing. */
-  UNABLE_TO_PARSE = "Unable to parse the message.",
-
-  MALFORMED_SESSION = "Malformed Session",
-}
-
-
-
-export interface VerifyParams {
-  payload: Payload;
-  signature: Signature;
-}
-
 /**
  * Returned on verifications.
  */
@@ -117,7 +77,7 @@ export interface SignInWithWeb3Response {
   success: boolean;
 
   /** If present `success` MUST be false and will provide extra information on the failure reason. */
-  error?: SignInWithSolanaError | SignInWithStarkwareError;
+  error?: SignInWithSolanaError | SignInWithStarkwareError | SignInWithEthereumError;
 
   /** Original message that was verified. */
   data: SIWS | SIWStarkware;
