@@ -1,6 +1,6 @@
 {
   "name": "@web3auth/sign-in-with-web3",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "dist/signInWithWeb3.cjs.js",
   "module": "dist/signInWithWeb3.esm.js",
@@ -26,9 +26,9 @@
   "homepage": "https://github.com/torusresearch/sign-in-with-web3#readme",
   "dependencies": {
     "@stablelib/random": "^1.0.1",
-    "@web3auth/sign-in-with-solana": "file:./local_packages/web3auth-sign-in-with-solana-0.0.3.tgz",
-    "@web3auth/sign-in-with-starkware": "file:./local_packages/web3auth-sign-in-with-starkware-0.0.2.tgz",
-    "eslint-plugin-mocha": "^10.0.4"
+    "@web3auth/sign-in-with-ethereum": "file:../sign-in-with-ethereum/web3auth-sign-in-with-ethereum-0.0.1.tgz",
+    "@web3auth/sign-in-with-solana": "file:../sign-in-with-solana/web3auth-sign-in-with-solana-0.0.3.tgz",
+    "@web3auth/sign-in-with-starkware": "file:../sign-in-with-starkware/web3auth-sign-in-with-starkware-0.0.2.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
@@ -47,6 +47,7 @@
     "eslint": "^8.13.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^25.0.0",
+    "eslint-plugin-mocha": "^10.0.4",
     "eslint-plugin-n": "^15.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^6.0.0",

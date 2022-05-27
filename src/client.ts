@@ -1,38 +1,45 @@
 import { randomStringForEntropy } from "@stablelib/random";
+import { SIWEthereum } from "@web3auth/sign-in-with-ethereum";
 import { SIWS } from "@web3auth/sign-in-with-solana";
 import { SIWStarkware } from "@web3auth/sign-in-with-starkware";
 
-import { VerifyParams } from "./types";
+import { Header, Payload, Signature, VerifyParams } from "./types";
 
-export class SIWW {
-  header: any;
+export class SIWWeb3 {
+  header: Header;
 
-  payload: any;
+  payload: Payload;
 
-  signature: any;
+  signature: Signature;
 
-  network: string;
+  network?: string;
 
-  networkStruct: SIWS | SIWStarkware;
+  chain: SIWS | SIWStarkware | SIWEthereum;
 
   /**
    * Creates a parsed Sign-In with Ethereum Message object from a
    * string or an object. If a string is used an parser is called to
    * validate the parameter, otherwise the fields are attributed.
-   * @param param {SIWW} Sign message as a string or an object.
+   * @param param {SIWWeb3} Sign message as a string or an object.
    */
-  constructor(param: Partial<SIWW>) {
+  constructor(param: Partial<SIWWeb3>) {
     switch (param.network) {
       case "solana": {
         const networkPayload: Partial<SIWS> = { header: param.header, payload: param.payload, signature: param.signature };
         Object.assign(this, param);
-        this.networkStruct = new SIWS(networkPayload);
+        this.chain = new SIWS(networkPayload);
         break;
       }
       case "starkware": {
         const networkPayload: Partial<SIWStarkware> = { header: param.header, payload: param.payload, signature: param.signature };
         Object.assign(this, param);
-        this.networkStruct = new SIWStarkware(networkPayload);
+        this.chain = new SIWStarkware(networkPayload);
+        break;
+      }
+      default: {
+        const networkPayload: Partial<SIWEthereum> = { header: param.header, payload: param.payload, signature: param.signature };
+        Object.assign(this, param);
+        this.chain = new SIWEthereum(networkPayload);
         break;
       }
     }
@@ -56,7 +63,7 @@ export class SIWW {
    * @returns {string} message
    */
   toMessage(): string {
-    return this.networkStruct.toMessage();
+    return this.chain.toMessage();
   }
 
   /**
@@ -87,6 +94,6 @@ export class SIWW {
    * @returns {Promise<SignInWithWeb3Response>} This object if valid.
    */
   async verify(params: VerifyParams): Promise<any> {
-    return this.networkStruct.verify(params).then();
+    return this.chain.verify(params);
   }
 }
