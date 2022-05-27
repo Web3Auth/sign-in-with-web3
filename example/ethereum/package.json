@@ -1,0 +1,68 @@
+{
+  "name": "react-app",
+  "version": "0.9.3",
+  "author": "Web3Auth",
+  "repository": "https://github.com/Web3Auth/sign-in-with-ethereum",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    ".editorconfig",
+    ".eslintignore",
+    ".eslintrc.json",
+    ".gitignore",
+    ".prettierignore",
+    ".prettierrc",
+    "LICENSE",
+    "package.json",
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "clean": "shx rm -rf dist .parcel-cache",
+    "build": "parcel build src/index.html",
+    "start": "parcel src/index.html",
+    "fmt": "prettier --write '{*,**/*}.{js,ts,jsx,tsx,json}'",
+    "lint": "eslint . && prettier --check '{*,**/*}.{js,ts,jsx,tsx,json}'",
+    "lint:fix": "eslint --fix . && npm fmt",
+    "nuke": "shx rm -rf node_modules package.lock"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.18.3",
+    "@web3auth/sign-in-with-web3": "file:../../web3auth-sign-in-with-web3-0.0.7.tgz",
+    "query-string": "^7.1.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "sweetalert2": "^11.4.12",
+    "url": "^0.11.0",
+    "web3": "^1.7.3"
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.2.2",
+    "@types/eslint-plugin-prettier": "^3.1.0",
+    "@types/node": "^17.0.17",
+    "@types/prettier": "^2.4.3",
+    "@types/react": "^17.0.40",
+    "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.14.0",
+    "@typescript-eslint/parser": "^5.14.0",
+    "assert": "^2.0.0",
+    "crypto-browserify": "^3.12.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.3",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "events": "^3.3.0",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "parcel": "^2.3.1",
+    "prettier": "^2.5.1",
+    "querystring-es3": "^0.2.1",
+    "shx": "^0.3.4",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "tslib": "^2.3.1",
+    "typescript": "^4.5.4"
+  }
+}

@@ -49,8 +49,8 @@ const MyWallet: React.FC = () => {
             version : '1',
             chainId : 1
         };
-        const header = { t : "sip99" };
-        const network = "solana";
+        const header = { t : "eip191" };
+        const network = "ethereum";
         let message = new SIWW({ header, payload, network });
 
         // we need the nonce for verification so getting it in a global variable
