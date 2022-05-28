@@ -2,6 +2,7 @@
 node_modules
 /dist
 *.tgz
+example/ethereum/dist
 
 embed.min.js
 # local env files
