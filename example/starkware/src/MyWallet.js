@@ -1,4 +1,4 @@
-import { SIWW } from '@web3auth/sign-in-with-web3';
+import { SIWWeb3 } from '@web3auth/sign-in-with-web3';
 import { getStarknet } from "get-starknet";
 import { useState } from 'react';
 import { starknetKeccak } from 'starknet/dist/utils/hash';
@@ -58,7 +58,7 @@ const MyWallet = () => {
         t : "eip191" 
       };
       const network = "starkware"
-      let message = new SIWW({ header, payload, network });
+      let message = new SIWWeb3({ header, payload, network });
       console.log(message);
       // we need the nonce for verification so getting it in a global variable
       setNonce(message.payload.nonce);
@@ -165,7 +165,7 @@ const networkId = () => {
                           s: sign.split(",")
                       } 
                       const payload = siwsMessage.payload;
-                      siwsMessage.verify({ payload, networkId, signature, kp: provider }).then(resp => {
+                      siwsMessage.verify(payload, signature, provider).then(resp => {
                           if (resp.success == true) {
                               new Swal("Success","Signature Verified","success")
                           } else {
