@@ -1,4 +1,4 @@
-import { SIWW } from '@web3auth/sign-in-with-web3';
+import { Payload as SIWPayload, SIWWeb3 } from '@web3auth/sign-in-with-web3';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import Web3 from 'web3';
@@ -14,7 +14,7 @@ const MyWallet: React.FC = () => {
 
     let statement = "Sign in with Ethereum to the app.";
 
-    const [siwsMessage, setSiwsMessage] = useState<SIWW|null>();
+    const [siwsMessage, setSiwsMessage] = useState<SIWWeb3|null>();
     const [nonce, setNonce] = useState("");
     const [sign, setSignature] = useState("");
     const [publicKey, setPublicKey] = useState("");
@@ -64,19 +64,19 @@ const MyWallet: React.FC = () => {
     // The nonce is generated on the server side 
     function createEthereumMessage() {
         
-        const payload = {
-          domain: domain,
-          address: publicKey,
-          uri: origin,
-          statement: statement,
-          version: "1",
-          chainId : 1
-        };
+        const payload = new SIWPayload();
+        payload.domain = domain;
+        payload.address = publicKey;
+        payload.uri = origin;
+        payload.statement = statement;
+        payload.version = "1";
+        payload.chainId = 1;
+        
         const header = {
           t : "eip191"
         };
         const network = "ethereum"
-        let message = new SIWW({ header, payload ,network});
+        let message = new SIWWeb3({ header, payload ,network});
         // we need the nonce for verification so getting it in a global variable
         setNonce(message.payload.nonce);
         setSiwsMessage(message);
@@ -125,7 +125,7 @@ const MyWallet: React.FC = () => {
                             s: sign
                         } 
                         const payload = siwsMessage!.payload;
-                        siwsMessage!.verify({ payload, signature }).then(resp => {
+                        siwsMessage!.verify(payload, signature).then(resp => {
                             if (resp.success == true) {
                                 new Swal("Success","Signature Verified","success")
                             } else {

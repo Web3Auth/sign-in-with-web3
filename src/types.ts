@@ -1,12 +1,6 @@
-import { SignInWithEthereumError } from "@web3auth/sign-in-with-ethereum";
+import { SignInWithEthereumError, SIWEthereum } from "@web3auth/sign-in-with-ethereum";
 import { SignInWithSolanaError, SIWS } from "@web3auth/sign-in-with-solana";
 import { SignInWithStarkwareError, SIWStarkware } from "@web3auth/sign-in-with-starkware";
-
-export interface VerifyParams {
-  payload: any;
-  signature: any;
-  kp: any;
-}
 
 export class SignatureMeta {}
 
@@ -80,5 +74,5 @@ export interface SignInWithWeb3Response {
   error?: SignInWithSolanaError | SignInWithStarkwareError | SignInWithEthereumError;
 
   /** Original message that was verified. */
-  data: SIWS | SIWStarkware;
+  data: SIWS | SIWStarkware | SIWEthereum;
 }
