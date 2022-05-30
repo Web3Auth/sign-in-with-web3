@@ -65,7 +65,6 @@ const MyWallet = () => {
       setSiwsMessage(message);
       console.log(JSON.stringify(message));
       const messageText = message.prepareMessage();
-      console.log(messageText.replace(/\n/g, '\\n'));
       const starknet = await getStarknet()  
       const result = await signMessage(messageText);
       setSignature(result.join(','));

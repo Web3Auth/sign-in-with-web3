@@ -22,7 +22,27 @@ export class SIWWeb3 {
    * validate the parameter, otherwise the fields are attributed.
    * @param param {SIWWeb3} Sign message as a string or an object.
    */
-  constructor(param: Partial<SIWWeb3>) {
+  constructor(param: Partial<SIWWeb3> | string) {
+
+    if (typeof param === "string") {
+      const network = getNetwork(param);
+      switch (network) {
+        case "solana": {
+          this.chain = new SIWS(param);
+          break;
+        }
+        case "starkware": {
+          this.chain = new SIWStarkware(param);
+          break;
+        }
+        default: {
+          this.chain = new SIWEthereum(param);
+          break;
+        }
+      }
+      return;
+    }
+
     switch (param.network) {
       case "solana": {
         const networkPayload: Partial<SIWS> = { header: param.header, payload: param.payload, signature: param.signature };
