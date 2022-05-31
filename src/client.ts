@@ -3,6 +3,7 @@ import { SIWEthereum } from "@web3auth/sign-in-with-ethereum";
 import { SIWS } from "@web3auth/sign-in-with-solana";
 import { SIWStarkware } from "@web3auth/sign-in-with-starkware";
 
+import { getNetworkFromMessage } from "./regex";
 import { Header, Payload, Signature } from "./types";
 
 export class SIWWeb3 {
@@ -23,9 +24,8 @@ export class SIWWeb3 {
    * @param param {SIWWeb3} Sign message as a string or an object.
    */
   constructor(param: Partial<SIWWeb3> | string) {
-
     if (typeof param === "string") {
-      const network = getNetwork(param);
+      const network = getNetworkFromMessage(param);
       switch (network) {
         case "solana": {
           this.chain = new SIWS(param);
