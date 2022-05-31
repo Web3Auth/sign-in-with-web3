@@ -166,12 +166,12 @@ const networkId = () => {
                       const payload = siwsMessage.payload;
                       siwsMessage.verify(payload, signature, provider).then(resp => {
                           if (resp.success == true) {
-                              new Swal("Success","Signature Verified","success")
+                              Swal.fire("Success","Signature Verified","success")
                           } else {
-                              new Swal("Error",resp.error.type,"error")
+                              Swal.fire("Error",resp.error.type,"error")
                           }
                       }).catch(err => { 
-                        new Swal("Error",err.error.toString(),"error")
+                        Swal.fire("Error",err.error.toString(),"error")
                       });
                   }}>Verify</button>
                   <button className='web3auth' id='verify' onClick={e => {
