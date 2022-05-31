@@ -2,9 +2,6 @@
 node_modules
 /dist
 *.tgz
-/example/ethereum/dist
-/example/solana/dist
-/example/starkware/dist
 
 embed.min.js
 # local env files
