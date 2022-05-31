@@ -4,6 +4,12 @@ import Swal from 'sweetalert2';
 import Web3 from 'web3';
 import EthereumLogo from '../public/ethereum-logo.png';
 
+declare global {
+  interface Window {
+    ethereum: any;
+    web3: any;
+  }
+}
 
 const MyWallet: React.FC = () => {
 
@@ -39,7 +45,7 @@ const MyWallet: React.FC = () => {
             setProvider(detectCurrentProvider());
             if (currentProvider) {
               if (currentProvider !== window.ethereum) {
-                  new Swal(
+                  Swal.fire(
                   'Non-Ethereum browser detected. You should consider trying MetaMask!'
                 );
               }
@@ -83,7 +89,7 @@ const MyWallet: React.FC = () => {
         const messageText = message.prepareMessage();
         const web3 = new Web3(currentProvider);
         
-        web3.eth.personal.sign(messageText, publicKey, (err, result) => {
+        web3.eth.personal.sign(messageText, publicKey, "", (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -125,11 +131,11 @@ const MyWallet: React.FC = () => {
                             s: sign
                         } 
                         const payload = siwsMessage!.payload;
-                        siwsMessage!.verify(payload, signature).then(resp => {
+                        siwsMessage!.verify(payload, signature).then((resp: any) => {
                             if (resp.success == true) {
-                                new Swal("Success","Signature Verified","success")
+                                Swal.fire("Success","Signature Verified","success")
                             } else {
-                                new Swal("Error",resp.error!.type,"error")
+                                Swal.fire("Error",resp.error!.type,"error")
                             }
                         });
                     }}>Verify</button>
