@@ -1,6 +1,6 @@
 {
   "name": "@web3auth/sign-in-with-web3",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "main": "dist/signInWithWeb3.cjs.js",
   "module": "dist/signInWithWeb3.esm.js",
