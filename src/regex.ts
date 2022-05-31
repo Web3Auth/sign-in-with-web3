@@ -8,5 +8,5 @@ export function getNetworkFromMessage(msg: string) {
   if (!match) {
     throw new Error("Message did not match the regular expression.");
   }
-  return match?.groups?.network;
+  return match?.groups?.network.toLowerCase();
 }
