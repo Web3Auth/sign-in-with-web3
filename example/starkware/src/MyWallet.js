@@ -2,7 +2,7 @@ import { SIWWeb3 } from '@web3auth/sign-in-with-web3';
 import { getStarknet } from "get-starknet";
 import { useState } from 'react';
 import { starknetKeccak } from 'starknet/dist/utils/hash';
-import Swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import './App.css';
 
 import StarkwareLogo from './starknet-logo.png';
@@ -171,6 +171,7 @@ const networkId = () => {
                               Swal.fire("Error",resp.error.type,"error")
                           }
                       }).catch(err => { 
+                        console.log(err)
                         Swal.fire("Error",err.error.toString(),"error")
                       });
                   }}>Verify</button>
