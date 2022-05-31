@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
-    "@web3auth/sign-in-with-web3": "file:../../web3auth-sign-in-with-web3-0.0.6.tgz",
+    "@web3auth/sign-in-with-web3": "file:../../web3auth-sign-in-with-web3-0.0.7.tgz",
     "bs58": "^5.0.0",
     "get-starknet": "^1.3.1",
     "react": "^18.1.0",
