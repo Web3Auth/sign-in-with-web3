@@ -24,6 +24,7 @@ export class SIWWeb3 {
   constructor(param: Partial<SIWWeb3> | string) {
     if (typeof param === "string") {
       const network = getNetworkFromMessage(param);
+      this.network = network.toLocaleLowerCase();
       switch (network.toLowerCase()) {
         case "solana": {
           const sp = new SIWS(param);
