@@ -7,6 +7,7 @@ import { getNetworkFromMessage } from "./regex";
 import { Header, Payload, Signature } from "./types";
 
 export class SIWWeb3 {
+
   header: Header;
 
   signature: Signature;

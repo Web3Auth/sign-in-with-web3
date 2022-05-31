@@ -69,7 +69,6 @@ const MyWallet: React.FC = () => {
     // Generate a message for signing
     // The nonce is generated on the server side 
     function createEthereumMessage() {
-        
         const payload = new SIWPayload();
         payload.domain = domain;
         payload.address = publicKey;
@@ -77,7 +76,6 @@ const MyWallet: React.FC = () => {
         payload.statement = statement;
         payload.version = "1";
         payload.chainId = 1;
-        
         const header = {
           t : "eip191"
         };
