@@ -47,7 +47,7 @@
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
-    "@web3auth/sign-in-with-web3": "file:../../web3auth-sign-in-with-web3-0.0.6.tgz",
+    "@web3auth/sign-in-with-web3": "file:../../web3auth-sign-in-with-web3-0.0.7.tgz",
     "assert": "^2.0.0",
     "crypto-browserify": "^3.12.0",
     "eslint": "^8.11.0",

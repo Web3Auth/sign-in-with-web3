@@ -5,7 +5,7 @@ import {
 import {
     WalletDisconnectButton, WalletModalProvider, WalletMultiButton
 } from '@solana/wallet-adapter-react-ui';
-import { SIWW } from '@web3auth/sign-in-with-web3';
+import { Payload as SIWPayload, SIWWeb3 } from '@web3auth/sign-in-with-web3';
 import bs58 from 'bs58';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
@@ -33,7 +33,7 @@ const MyWallet: React.FC = () => {
     
     let statement = "Sign in with Solana to the app.";
 
-    const [siwsMessage, setSiwsMessage] = useState<SIWW|null>();
+    const [siwsMessage, setSiwsMessage] = useState<SIWWeb3|null>();
     const [nonce, setNonce] = useState("");
     const [sign, setSignature] = useState("");
 
@@ -41,17 +41,17 @@ const MyWallet: React.FC = () => {
     // The nonce is generated on the server side 
     function createSolanaMessage() {
         
-        const payload = {
-            domain: domain,
-            uri: origin,
-            address: publicKey!.toString(),
-            statement : statement,
-            version : '1',
-            chainId : 1
-        };
-        const header = { t : "eip191" };
-        const network = "ethereum";
-        let message = new SIWW({ header, payload, network });
+        const payload = new SIWPayload();
+        payload.domain = domain;
+        payload.uri = origin;
+        payload.address = publicKey!.toString();
+        payload.statement = statement;
+        payload.version = "1";
+        payload.chainId = 1;
+    
+        const header = { t : "sip99" };
+        const network = "solana";
+        let message = new SIWWeb3({ header, payload, network });
 
         // we need the nonce for verification so getting it in a global variable
         setNonce(message.payload.nonce);
@@ -107,7 +107,7 @@ const MyWallet: React.FC = () => {
                             s: sign
                         } 
                         const payload = siwsMessage!.payload;
-                        siwsMessage!.verify({ payload, signature }).then(resp => {
+                        siwsMessage!.verify(payload, signature).then(resp => {
                             if (resp.success == true) {
                                 new Swal("Success","Signature Verified","success")
                             } else {
