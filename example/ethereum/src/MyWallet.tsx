@@ -1,9 +1,15 @@
-import { SIWW } from '@web3auth/sign-in-with-web3';
+import { Payload as SIWPayload, SIWWeb3 } from '@web3auth/sign-in-with-web3';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import Web3 from 'web3';
 import EthereumLogo from '../public/ethereum-logo.png';
 
+declare global {
+  interface Window {
+    ethereum: any;
+    web3: any;
+  }
+}
 
 const MyWallet: React.FC = () => {
 
@@ -14,7 +20,7 @@ const MyWallet: React.FC = () => {
 
     let statement = "Sign in with Ethereum to the app.";
 
-    const [siwsMessage, setSiwsMessage] = useState<SIWW|null>();
+    const [siwsMessage, setSiwsMessage] = useState<SIWWeb3|null>();
     const [nonce, setNonce] = useState("");
     const [sign, setSignature] = useState("");
     const [publicKey, setPublicKey] = useState("");
@@ -39,7 +45,7 @@ const MyWallet: React.FC = () => {
             setProvider(detectCurrentProvider());
             if (currentProvider) {
               if (currentProvider !== window.ethereum) {
-                  new Swal(
+                  Swal.fire(
                   'Non-Ethereum browser detected. You should consider trying MetaMask!'
                 );
               }
@@ -64,26 +70,26 @@ const MyWallet: React.FC = () => {
     // The nonce is generated on the server side 
     function createEthereumMessage() {
         
-        const payload = {
-          domain: domain,
-          address: publicKey,
-          uri: origin,
-          statement: statement,
-          version: "1",
-          chainId : 1
-        };
+        const payload = new SIWPayload();
+        payload.domain = domain;
+        payload.address = publicKey;
+        payload.uri = origin;
+        payload.statement = statement;
+        payload.version = "1";
+        payload.chainId = 1;
+        
         const header = {
           t : "eip191"
         };
         const network = "ethereum"
-        let message = new SIWW({ header, payload ,network});
+        let message = new SIWWeb3({ header, payload ,network});
         // we need the nonce for verification so getting it in a global variable
         setNonce(message.payload.nonce);
         setSiwsMessage(message);
         const messageText = message.prepareMessage();
         const web3 = new Web3(currentProvider);
         
-        web3.eth.personal.sign(messageText, publicKey, (err, result) => {
+        web3.eth.personal.sign(messageText, publicKey, "", (err, result) => {
             if (err) {
                 console.log(err);
             } else {
@@ -125,11 +131,11 @@ const MyWallet: React.FC = () => {
                             s: sign
                         } 
                         const payload = siwsMessage!.payload;
-                        siwsMessage!.verify({ payload, signature }).then(resp => {
+                        siwsMessage!.verify(payload, signature).then((resp: any) => {
                             if (resp.success == true) {
-                                new Swal("Success","Signature Verified","success")
+                                Swal.fire("Success","Signature Verified","success")
                             } else {
-                                new Swal("Error",resp.error!.type,"error")
+                                Swal.fire("Error",resp.error!.type,"error")
                             }
                         });
                     }}>Verify</button>

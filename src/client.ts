@@ -3,7 +3,8 @@ import { SIWEthereum } from "@web3auth/sign-in-with-ethereum";
 import { SIWS } from "@web3auth/sign-in-with-solana";
 import { SIWStarkware } from "@web3auth/sign-in-with-starkware";
 
-import { Header, Payload, Signature, VerifyParams } from "./types";
+import { getNetworkFromMessage } from "./regex";
+import { Header, Payload, Signature } from "./types";
 
 export class SIWWeb3 {
   header: Header;
@@ -22,7 +23,26 @@ export class SIWWeb3 {
    * validate the parameter, otherwise the fields are attributed.
    * @param param {SIWWeb3} Sign message as a string or an object.
    */
-  constructor(param: Partial<SIWWeb3>) {
+  constructor(param: Partial<SIWWeb3> | string) {
+    if (typeof param === "string") {
+      const network = getNetworkFromMessage(param);
+      switch (network) {
+        case "solana": {
+          this.chain = new SIWS(param);
+          break;
+        }
+        case "starkware": {
+          this.chain = new SIWStarkware(param);
+          break;
+        }
+        default: {
+          this.chain = new SIWEthereum(param);
+          break;
+        }
+      }
+      return;
+    }
+
     switch (param.network) {
       case "solana": {
         const networkPayload: Partial<SIWS> = { header: param.header, payload: param.payload, signature: param.signature };
@@ -93,7 +113,33 @@ export class SIWWeb3 {
    * @param params Parameters to verify the integrity of the message, signature is required.
    * @returns {Promise<SignInWithWeb3Response>} This object if valid.
    */
-  async verify(params: VerifyParams): Promise<any> {
-    return this.chain.verify(params);
+  async verify(payload: Payload, signature: Signature, kp?: any): Promise<any> {
+    switch (this.network) {
+      case "solana": {
+        const vp = {
+          payload,
+          signature,
+        };
+        return (this.chain as SIWS).verify(vp);
+      }
+      case "starkware": {
+        if (!kp) {
+          throw new Error("No keypair provided");
+        }
+        const vp = {
+          payload,
+          signature,
+          kp,
+        };
+        return (this.chain as SIWStarkware).verify(vp);
+      }
+      default: {
+        const vp = {
+          payload,
+          signature,
+        };
+        return (this.chain as SIWEthereum).verify(vp);
+      }
+    }
   }
 }
