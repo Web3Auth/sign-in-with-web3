@@ -109,9 +109,9 @@ const MyWallet: React.FC = () => {
                         const payload = siwsMessage!.payload;
                         siwsMessage!.verify(payload, signature).then(resp => {
                             if (resp.success == true) {
-                                new Swal("Success","Signature Verified","success")
+                                Swal.fire("Success","Signature Verified","success")
                             } else {
-                                new Swal("Error",resp.error!.type,"error")
+                                Swal.fire("Error",resp.error!.type,"error")
                             }
                         });
                     }}>Verify</button>
