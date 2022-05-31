@@ -9,13 +9,11 @@ import { Header, Payload, Signature } from "./types";
 export class SIWWeb3 {
   header: Header;
 
-  payload: Payload;
-
   signature: Signature;
 
   network?: string;
 
-  chain: SIWS | SIWStarkware | SIWEthereum;
+  payload: SIWS["payload"] | SIWStarkware["payload"] | SIWEthereum["payload"];
 
   /**
    * Creates a parsed Sign-In with Ethereum Message object from a
@@ -28,15 +26,24 @@ export class SIWWeb3 {
       const network = getNetworkFromMessage(param);
       switch (network.toLowerCase()) {
         case "solana": {
-          this.chain = new SIWS(param);
+          const sp = new SIWS(param);
+          this.payload = sp.payload;
+          this.header = sp.header;
+          this.signature = sp.signature;
           break;
         }
         case "starkware": {
-          this.chain = new SIWStarkware(param);
+          const sp = new SIWStarkware(param);
+          this.payload = sp.payload;
+          this.header = sp.header;
+          this.signature = sp.signature;
           break;
         }
         default: {
-          this.chain = new SIWEthereum(param);
+          const sp = new SIWEthereum(param);
+          this.payload = sp.payload;
+          this.header = sp.header;
+          this.signature = sp.signature;
           break;
         }
       }
@@ -47,19 +54,19 @@ export class SIWWeb3 {
       case "solana": {
         const networkPayload: Partial<SIWS> = { header: param.header, payload: param.payload, signature: param.signature };
         Object.assign(this, param);
-        this.chain = new SIWS(networkPayload);
+        this.payload = new SIWS(networkPayload).payload;
         break;
       }
       case "starkware": {
         const networkPayload: Partial<SIWStarkware> = { header: param.header, payload: param.payload, signature: param.signature };
         Object.assign(this, param);
-        this.chain = new SIWStarkware(networkPayload);
+        this.payload = new SIWStarkware(networkPayload).payload;
         break;
       }
       default: {
         const networkPayload: Partial<SIWEthereum> = { header: param.header, payload: param.payload, signature: param.signature };
         Object.assign(this, param);
-        this.chain = new SIWEthereum(networkPayload);
+        this.payload = new SIWEthereum(networkPayload).payload;
         break;
       }
     }
@@ -83,7 +90,20 @@ export class SIWWeb3 {
    * @returns {string} message
    */
   toMessage(): string {
-    return this.chain.toMessage();
+    switch (this.network) {
+      case "solana": {
+        const message = new SIWS({ payload: this.payload as SIWS["payload"] }).toMessage();
+        return message;
+      }
+      case "starkware": {
+        const message = new SIWStarkware({ payload: this.payload as SIWStarkware["payload"] }).toMessage();
+        return message;
+      }
+      default: {
+        const message = new SIWEthereum({ payload: this.payload as SIWEthereum["payload"] }).toMessage();
+        return message;
+      }
+    }
   }
 
   /**
@@ -116,29 +136,32 @@ export class SIWWeb3 {
   async verify(payload: Payload, signature: Signature, kp?: any): Promise<any> {
     switch (this.network) {
       case "solana": {
+        const siw = new SIWS({ payload: this.payload as SIWS["payload"] });
         const vp = {
           payload,
           signature,
         };
-        return (this.chain as SIWS).verify(vp);
+        return (siw as SIWS).verify(vp);
       }
       case "starkware": {
         if (!kp) {
           throw new Error("No keypair provided");
         }
+        const siw = new SIWStarkware({ payload: this.payload as SIWStarkware["payload"] });
         const vp = {
           payload,
           signature,
           kp,
         };
-        return (this.chain as SIWStarkware).verify(vp);
+        return (siw as SIWStarkware).verify(vp);
       }
       default: {
+        const siw = new SIWEthereum({ payload: this.payload as SIWEthereum["payload"] });
         const vp = {
           payload,
           signature,
         };
-        return (this.chain as SIWEthereum).verify(vp);
+        return (siw as SIWEthereum).verify(vp);
       }
     }
   }
