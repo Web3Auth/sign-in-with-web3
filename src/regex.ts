@@ -1,6 +1,6 @@
-const DOMAIN = "(?<domain>([^?#]*)) wants you to sign in with your (?<network>([^*]*)) account:";
+const DOMAIN = "sign in with your (?<network>([^*]*)) account:";
 
-const MESSAGE = `^${DOMAIN}$`;
+const MESSAGE = `${DOMAIN}`;
 
 export function getNetworkFromMessage(msg: string) {
   const REGEX = new RegExp(MESSAGE, "g");
@@ -8,5 +8,5 @@ export function getNetworkFromMessage(msg: string) {
   if (!match) {
     throw new Error("Message did not match the regular expression.");
   }
-  return match?.groups?.network.toLowerCase();
+  return match?.groups?.network;
 }

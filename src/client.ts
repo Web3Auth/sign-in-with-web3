@@ -26,7 +26,7 @@ export class SIWWeb3 {
   constructor(param: Partial<SIWWeb3> | string) {
     if (typeof param === "string") {
       const network = getNetworkFromMessage(param);
-      switch (network) {
+      switch (network.toLowerCase()) {
         case "solana": {
           this.chain = new SIWS(param);
           break;
