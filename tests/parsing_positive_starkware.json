@@ -1,0 +1,155 @@
+{
+  "no optional fields starkware ": {
+    "message": "localhost:3000 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\nSign in with Starkware to the app.\n\nURI: http://localhost:3000\nVersion: 1\nChain ID: 1\nNonce: jyyowvDxToCXIcsQ7\nIssued At: 2022-05-19T14:25:52.568Z",
+    "fields": 
+    {
+      "header": {
+        "t": "eip191"
+      },
+      "payload": {
+        "domain": "localhost:3000",
+        "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+        "statement": "Sign in with Starkware to the app.",
+        "uri": "http://localhost:3000",
+        "version": "1",
+        "chainId": 1,
+        "nonce": "jyyowvDxToCXIcsQ7",
+        "issuedAt":"2022-05-19T14:25:52.568Z"
+      },
+      "network":"starkware"
+    }
+  },
+  "some optional field starkware ": {
+    "message": "localhost:3000 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\nSign in with Starkware to the app.\n\nURI: http://localhost:3000\nVersion: 1\nChain ID: 1\nNonce: p0qYmzwIYDXojTrN8\nIssued At: 2022-05-19T12:20:38.855Z\nExpiration Time: 2022-05-19T13:20:38.855Z",
+    "fields": {
+      "header": {
+        "t": "eip191"
+      },
+      "payload": {
+        "domain": "localhost:3000",
+        "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+        "statement": "Sign in with Starkware to the app.",
+        "uri": "http://localhost:3000",
+        "version": "1",
+        "chainId": 1,
+        "nonce": "p0qYmzwIYDXojTrN8",
+        "issuedAt": "2022-05-19T12:20:38.855Z",
+        "expirationTime": "2022-05-19T13:20:38.855Z"
+      },
+      "network":"starkware"
+    }
+  },
+  "timestamp without microseconds starkware ": {
+    "message": "localhost:3000 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\nSign in with Starkware to the app.\n\nURI: http://localhost:3000\nVersion: 1\nChain ID: 1\nNonce: 7MlPylDsUK94kG2ZH\nIssued At: 2022-05-19T12:18:16Z",
+    "fields": {
+      "header": {
+        "t": "eip191"
+      },
+      "payload": {
+        "domain": "localhost:3000",
+        "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+        "statement": "Sign in with Starkware to the app.",
+        "uri": "http://localhost:3000",
+        "version": "1",
+        "chainId": 1,
+        "nonce": "7MlPylDsUK94kG2ZH",
+        "issuedAt": "2022-05-19T12:18:16Z"
+      },
+      "network":"starkware"
+    }
+  },
+  "domain is RFC 3986 authority with IP starkware ": {
+    "message": "127.0.0.1 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\nI accept the ServiceOrg Terms of Service: https://service.org/tos\n\nURI: https://service.org/login\nVersion: 1\nChain ID: 1\nNonce: 32832457\nIssued At: 2021-01-11T11:15:23.000Z",
+    "fields": {
+      "header": {
+        "t": "eip191"
+      },
+      "payload": {
+        "domain": "127.0.0.1",
+        "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+        "statement": "I accept the ServiceOrg Terms of Service: https://service.org/tos",
+        "uri": "https://service.org/login",
+        "version": "1",
+        "chainId": 1,
+        "nonce": "32832457",
+        "issuedAt": "2021-01-11T11:15:23.000Z"
+      },
+      "network":"starkware"
+    }
+  },
+  "domain is RFC 3986 authority with userinfo starkware ": {
+    "message": "test@127.0.0.1 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\nI accept the ServiceOrg Terms of Service: https://service.org/tos\n\nURI: https://service.org/login\nVersion: 1\nChain ID: 1\nNonce: 32832457\nIssued At: 2021-01-11T11:15:23.000Z",
+    "fields": {
+      "header": {
+        "t": "eip191"
+      },
+      "payload": {
+        "domain": "test@127.0.0.1",
+        "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+        "statement": "I accept the ServiceOrg Terms of Service: https://service.org/tos",
+        "uri": "https://service.org/login",
+        "version": "1",
+        "chainId": 1,
+        "nonce": "32832457",
+        "issuedAt": "2021-01-11T11:15:23.000Z"
+      },
+      "network":"starkware"
+    }
+  },
+  "domain is RFC 3986 authority with port starkware ": {
+    "message": "127.0.0.1:8080 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\nI accept the ServiceOrg Terms of Service: https://service.org/tos\n\nURI: https://service.org/login\nVersion: 1\nChain ID: 1\nNonce: 32832457\nIssued At: 2021-01-11T11:15:23.000Z",
+    "fields": {
+      "header": {
+        "t": "eip191"
+      },
+      "payload": {
+        "domain": "127.0.0.1:8080",
+        "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+        "statement": "I accept the ServiceOrg Terms of Service: https://service.org/tos",
+        "uri": "https://service.org/login",
+        "version": "1",
+        "chainId": 1,
+        "nonce": "32832457",
+        "issuedAt": "2021-01-11T11:15:23.000Z"
+      },
+      "network":"starkware"
+    }
+  },
+  "domain is RFC 3986 authority with userinfo and port starkware ": {
+    "message": "test@127.0.0.1:8080 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\nI accept the ServiceOrg Terms of Service: https://service.org/tos\n\nURI: https://service.org/login\nVersion: 1\nChain ID: 1\nNonce: 32832457\nIssued At: 2021-01-11T11:15:23.000Z",
+    "fields": {
+      "header": {
+        "t": "eip191"
+      },
+      "payload": {
+        "domain": "test@127.0.0.1:8080",
+        "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+        "statement": "I accept the ServiceOrg Terms of Service: https://service.org/tos",
+        "uri": "https://service.org/login",
+        "version": "1",
+        "chainId": 1,
+        "nonce": "32832457",
+        "issuedAt": "2021-01-11T11:15:23.000Z"
+      },
+      "network":"starkware"
+    }
+  },
+  "no statement starkware ": {
+    "message": "localhost:3000 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\n\nURI: http://localhost:3000\nVersion: 1\nChain ID: 1\nNonce: TRYw76aCwKG7e7NIy\nIssued At: 2022-05-19T19:28:58.854Z",
+    "fields": {
+      "header": {
+        "t": "eip191"
+      },
+      "payload": {
+        "domain": "localhost:3000",
+        "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+        "uri": "http://localhost:3000",
+        "version": "1",
+        "chainId": 1,
+        "nonce": "TRYw76aCwKG7e7NIy",
+        "issuedAt": "2022-05-19T19:28:58.854Z"
+      },
+      "network":"starkware"
+    }
+  }
+}
