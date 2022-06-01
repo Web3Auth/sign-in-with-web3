@@ -7,7 +7,6 @@ import { getNetworkFromMessage } from "./regex";
 import { Header, Payload, Signature } from "./types";
 
 export class SIWWeb3 {
-
   header: Header;
 
   signature: Signature;
@@ -25,27 +24,23 @@ export class SIWWeb3 {
   constructor(param: Partial<SIWWeb3> | string) {
     if (typeof param === "string") {
       const network = getNetworkFromMessage(param);
-      this.network = network.toLocaleLowerCase();
       switch (network.toLowerCase()) {
         case "solana": {
           const sp = new SIWS(param);
           this.payload = sp.payload;
-          this.header = sp.header;
-          this.signature = sp.signature;
+          this.network = "solana";
           break;
         }
         case "starkware": {
           const sp = new SIWStarkware(param);
           this.payload = sp.payload;
-          this.header = sp.header;
-          this.signature = sp.signature;
+          this.network = "starkware";
           break;
         }
         default: {
           const sp = new SIWEthereum(param);
           this.payload = sp.payload;
-          this.header = sp.header;
-          this.signature = sp.signature;
+          this.network = "ethereum";
           break;
         }
       }
