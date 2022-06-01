@@ -28,27 +28,18 @@ export class SIWWeb3 {
         case "solana": {
           const sp = new SIWS(param);
           this.payload = sp.payload;
-          this.header = {
-            t: "sip99",
-          };
           this.network = "solana";
           break;
         }
         case "starkware": {
           const sp = new SIWStarkware(param);
           this.payload = sp.payload;
-          this.header = {
-            t: "eip191",
-          };
           this.network = "starkware";
           break;
         }
         default: {
           const sp = new SIWEthereum(param);
           this.payload = sp.payload;
-          this.header = {
-            t: "eip191",
-          };
           this.network = "ethereum";
           break;
         }

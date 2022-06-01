@@ -125,7 +125,7 @@ const MyWallet: React.FC = () => {
                     <input className='signature' type="text" id="signature" value={sign} onChange={ e=> setSignature(e.target.value)} />
                     <button className='web3auth' id='verify' onClick={e => {
                         const signature = {
-                            t: "sip99",
+                            t: "eip191",
                             s: sign
                         } 
                         const payload = siwsMessage!.payload;
