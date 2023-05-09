@@ -8,7 +8,7 @@ import { ErrorTypes as ErrorTypesStarkware } from "@web3auth/sign-in-with-starkw
 import assert from "assert";
 import base58 from "bs58";
 import { Wallet } from "ethers";
-import { ec } from "starknet";
+import { ec, hash, stark, typedData } from "starknet";
 
 import { Signature, SIWWeb3 } from "../src/index";
 import parsingPositiveEthereum from "./parsing_positive_ethereum.json";
@@ -89,7 +89,7 @@ describe(`Message Validation`, function () {
     it(`Validates message successfully - starkware: ${test}`, async function () {
       const { payload, signature, network, header } = value;
       const msg = new SIWWeb3({ payload, network, header });
-      const starkKeyPair = ec.getKeyPair(payload.address.slice(2));
+      const starkKeyPair = ec.getKeyPair(payload.address);
       const verify = await msg.verify(payload, signature, starkKeyPair);
       assert.equal(verify.success, true);
     });
@@ -128,7 +128,8 @@ describe(`Message Validation`, function () {
       try {
         const { payload, signature, network, header } = value;
         const msg = new SIWWeb3({ payload, network, header });
-        const error = await msg.verify(payload, signature);
+        const kp = ec.getKeyPair(payload.address);
+        const error = await msg.verify(payload, signature, kp);
         assert(Object.values(ErrorTypesStarkware).includes(error.error.type));
       } catch (error) {
         // this is for time error
@@ -174,21 +175,40 @@ describe(`Round Trip Solana`, function () {
   });
 });
 
-// describe(`Round Trip Starkware`, function () {
-//   const rbytes = nacl.randomBytes(32);
-//   const keypair = nacl.sign.keyPair.fromSeed(rbytes);
-//   Object.entries(parsingPositiveSolana).forEach(([test, value]) => {
-//     it(`Generates a Successfully Verifying message: ${test}`, async function () {
-//       const { payload } = value.fields;
-//       payload.address = base58.encode(keypair.publicKey);
-//       const msg = new SIWWeb3({ payload });
-//       const encodedMessage = new TextEncoder().encode(msg.prepareMessage());
-//       const signatureEncoded = base58.encode(nacl.sign.detached(encodedMessage, keypair.secretKey));
-//       const signature = new Signature();
-//       signature.s = signatureEncoded;
-//       signature.t = "sip99";
-//       const { success } = await msg.verify(payload, signature);
-//       assert.equal(success, true);
-//     });
-//   });
-// });
+describe(`Round Trip Starkware`, function () {
+  const privateKey = stark.randomAddress();
+  const starkKeyPair = ec.getKeyPair(privateKey);
+  const fullPublicKey = ec.getStarkKey(starkKeyPair);
+  Object.entries(parsingPositiveStarkware).forEach(([test, el]) => {
+    it(`Generates a Successfully Verifying message: ${test}`, async function () {
+      const { payload } = el.fields;
+      payload.address = fullPublicKey;
+      const msg = new SIWWeb3({ payload });
+      const signature = new Signature();
+      const message = hash.starknetKeccak(msg.prepareMessage()).toString("hex").substring(0, 31);
+      const typedMessage: typedData.TypedData = {
+        domain: {
+          name: "Example DApp",
+          chainId: payload.chainId,
+          version: "0.0.1",
+        },
+        types: {
+          StarkNetDomain: [
+            { name: "name", type: "felt" },
+            { name: "chainId", type: "felt" },
+            { name: "version", type: "felt" },
+          ],
+          Message: [{ name: "message", type: "felt" }],
+        },
+        primaryType: "Message",
+        message: {
+          message,
+        },
+      };
+      signature.s = ec.sign(starkKeyPair, typedData.getMessageHash(typedMessage, payload.address));
+      signature.t = "eip191";
+      const success = await msg.verify(payload, signature, starkKeyPair);
+      assert.ok(success);
+    });
+  });
+});
