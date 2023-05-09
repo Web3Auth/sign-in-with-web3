@@ -1,8 +1,7 @@
 {
   "no optional fields starkware ": {
     "message": "localhost:3000 wants you to sign in with your Starkware account:\n0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55\n\nSign in with Starkware to the app.\n\nURI: http://localhost:3000\nVersion: 1\nChain ID: 1\nNonce: jyyowvDxToCXIcsQ7\nIssued At: 2022-05-19T14:25:52.568Z",
-    "fields": 
-    {
+    "fields": {
       "header": {
         "t": "eip191"
       },
@@ -14,9 +13,9 @@
         "version": "1",
         "chainId": 1,
         "nonce": "jyyowvDxToCXIcsQ7",
-        "issuedAt":"2022-05-19T14:25:52.568Z"
+        "issuedAt": "2022-05-19T14:25:52.568Z"
       },
-      "network":"starkware"
+      "network": "starkware"
     }
   },
   "some optional field starkware ": {
@@ -36,7 +35,7 @@
         "issuedAt": "2022-05-19T12:20:38.855Z",
         "expirationTime": "2022-05-19T13:20:38.855Z"
       },
-      "network":"starkware"
+      "network": "starkware"
     }
   },
   "timestamp without microseconds starkware ": {
@@ -55,7 +54,7 @@
         "nonce": "7MlPylDsUK94kG2ZH",
         "issuedAt": "2022-05-19T12:18:16Z"
       },
-      "network":"starkware"
+      "network": "starkware"
     }
   },
   "domain is RFC 3986 authority with IP starkware ": {
@@ -74,7 +73,7 @@
         "nonce": "32832457",
         "issuedAt": "2021-01-11T11:15:23.000Z"
       },
-      "network":"starkware"
+      "network": "starkware"
     }
   },
   "domain is RFC 3986 authority with userinfo starkware ": {
@@ -93,7 +92,7 @@
         "nonce": "32832457",
         "issuedAt": "2021-01-11T11:15:23.000Z"
       },
-      "network":"starkware"
+      "network": "starkware"
     }
   },
   "domain is RFC 3986 authority with port starkware ": {
@@ -112,7 +111,7 @@
         "nonce": "32832457",
         "issuedAt": "2021-01-11T11:15:23.000Z"
       },
-      "network":"starkware"
+      "network": "starkware"
     }
   },
   "domain is RFC 3986 authority with userinfo and port starkware ": {
@@ -131,7 +130,7 @@
         "nonce": "32832457",
         "issuedAt": "2021-01-11T11:15:23.000Z"
       },
-      "network":"starkware"
+      "network": "starkware"
     }
   },
   "no statement starkware ": {
@@ -149,7 +148,7 @@
         "nonce": "TRYw76aCwKG7e7NIy",
         "issuedAt": "2022-05-19T19:28:58.854Z"
       },
-      "network":"starkware"
+      "network": "starkware"
     }
   }
 }

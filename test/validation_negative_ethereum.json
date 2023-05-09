@@ -1,0 +1,86 @@
+{
+  "expired message": {
+    "header": {
+      "t": "eip191"
+    },
+    "payload": {
+      "domain": "signin.io",
+      "address": "CmLUAWWixFNZb4ZruXzn7Mu9roAt82jK3hPeybUQQ6NT",
+      "statement": "Sign-In With Ethereum Example Statement",
+      "uri": "https://signin.io",
+      "version": "1",
+      "nonce": "feswegg1",
+      "issuedAt": "2021-04-01T11:47:23.844Z",
+      "chainId": 1,
+      "expirationTime": "2021-01-05T00:00:00Z"
+    },
+    "signature": {
+      "t": "eip191",
+      "s": "4nxtXtFgkMXe8Nj9ANPXim8zjXyUm5tXLcaj9EmbiT3yrwkg73FQsZMaU8vN6utvMXWPXCGCtHX9kLfmYL6zcMbU"
+    },
+    "network": "ethereum"
+  },
+  "malformed signature": {
+    "header": {
+      "t": "eip191"
+    },
+    "payload": {
+      "domain": "signin.io",
+      "address": "CmLUAWWixFNZb4ZruXzn7Mu9roAt82jK3hPeybUQQ6NT",
+      "statement": "Sign-In With Ethereum Example Statement",
+      "uri": "https://signin.io",
+      "version": "1",
+      "nonce": "wiasdflk",
+      "issuedAt": "2021-04-03T11:21:13.464Z",
+      "chainId": 1,
+      "expirationTime": "2121-04-04T11:21:13.464Z"
+    },
+    "signature": {
+      "t": "eip191",
+      "s": "56Hfu7LqK79sh6xVXic4M3vUAGfKMWL3vEN5Z3kMkzn8RvLvoHCVbXD3Eg4bnFJj846JDzimK9aFwrWJ9Sy6buQ"
+    },
+    "network": "ethereum"
+  },
+  "wrong signature": {
+    "header": {
+      "t": "eip191"
+    },
+    "payload": {
+      "domain": "signin.io",
+      "address": "CmLUAWWixFNZb4ZruXzn7Mu9roAt82jK3hPeybUQQ6NT",
+      "statement": "Sign-In With Ethereum Example Statement",
+      "uri": "https://signin.io",
+      "version": "1",
+      "nonce": "bTyXgcQxn2htgkjJn",
+      "issuedAt": "2021-04-03T16:11:13.424Z",
+      "chainId": 1,
+      "expirationTime": "2121-04-04T11:21:13.464Z"
+    },
+    "signature": {
+      "t": "eip191",
+      "s": "4nxtXtFgkMXe8Nj9ANPXim8zjXyUm5tXLcaj9EmbiT3yrwkg73FQsZMaU8vN6utvMXWPXCGCtHX9kLfmYL6zcMbU"
+    },
+    "network": "ethereum"
+  },
+  "invalid expiration time": {
+    "header": {
+      "t": "eip191"
+    },
+    "payload": {
+      "domain": "signin.io",
+      "address": "CmLUAWWixFNZb4ZruXzn7Mu9roAt82jK3hPeybUQQ6NT",
+      "statement": "Sign-In With Ethereum Example Statement",
+      "uri": "https://signin.io",
+      "version": "1",
+      "nonce": "asd8asdf",
+      "issuedAt": "2021-04-04T11:21:13.464Z",
+      "chainId": 1,
+      "expirationTime": "2022-22-32T00:00:00.000Z"
+    },
+    "signature": {
+      "t": "eip191",
+      "s": "5GdGGKsMZD8JciUEVEVLfxTZjbuixvSQirP9p7EdmoSbfnSapTCGiTEQ2ysiSDvnBDiWEaZjsFVdax5BJsQi1ZxY"
+    },
+    "network": "ethereum"
+  }
+}

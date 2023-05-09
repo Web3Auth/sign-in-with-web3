@@ -1,12 +1,10 @@
 {
   "root": true,
   "extends": ["@toruslabs/eslint-config-typescript"],
-  "plugins": ["jest"],
   "parser": "@typescript-eslint/parser",
   "ignorePatterns": "*.config.js",
   "env": {
-    "jest": true,
-    "mocha": false
+    "mocha": true
   },
   "parserOptions": {
     "sourceType": "module",
@@ -14,7 +12,5 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "@typescript-eslint/no-throw-literal": "error",
-    "no-console": "off"
   }
 }

@@ -1,0 +1,7 @@
+{
+    "require": ["./test/setup.mjs"],
+    "spec": "./test/client.spec.ts",
+    "extension": ["js", "ts"],
+    "timeout": 0,
+    "exit": true
+  }

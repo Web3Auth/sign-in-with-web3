@@ -1,0 +1,98 @@
+{
+  "expired message starkware": {
+    "header": {
+      "t": "eip191"
+    },
+    "network": "starkware",
+    "payload": {
+      "domain": "localhost:3000",
+      "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+      "statement": "Sign in with Starkware to the app.",
+      "uri": "http://localhost:3000",
+      "version": "1",
+      "chainId": 1,
+      "nonce": "p0qYmzwIYDXojTrN8",
+      "issuedAt": "2022-05-19T12:20:38.855Z",
+      "expirationTime": "2022-05-21T13:20:38.855Z"
+    },
+    "signature": {
+      "t": "eip191",
+      "s": [
+        "118100204109122388941793109664257822188151215240923875523810090820787550281",
+        "3302940160864445959923306653323494720255550626151039794263555019062668706883"
+      ]
+    }
+  },
+  "malformed signature starkware": {
+    "header": {
+      "t": "eip191"
+    },
+    "network": "starkware",
+    "payload": {
+      "domain": "signin.io",
+      "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+      "statement": "Sign-In With Starkware Example Statement",
+      "uri": "https://signin.io",
+      "version": "1",
+      "nonce": "wiasdflk",
+      "issuedAt": "2021-04-03T11:21:13.464Z",
+      "chainId": 1,
+      "expirationTime": "2121-04-04T11:21:13.464Z"
+    },
+    "signature": {
+      "t": "eip191",
+      "s": [
+        "118100204109122388941793109664257822188151215240923875523810090820787550281",
+        "3302940160864445959923306653323494720255550626151039794263555019062668706883"
+      ]
+    }
+  },
+  "wrong signature starkware": {
+    "header": {
+      "t": "eip191"
+    },
+    "network": "starkware",
+    "payload": {
+      "domain": "signin.io",
+      "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+      "statement": "Sign-In With Starkware Example Statement",
+      "uri": "https://signin.io",
+      "version": "1",
+      "nonce": "bTyXgcQxn2htgkjJn",
+      "issuedAt": "2021-04-03T16:11:13.424Z",
+      "chainId": 1,
+      "expirationTime": "2121-04-04T11:21:13.464Z"
+    },
+    "signature": {
+      "t": "eip191",
+      "s": [
+        "118100204109122388941793109664257822188151215240923875523810090820787550281",
+        "3302940160864445959923306653323494720255550626151039794263555019062668706883"
+      ]
+    }
+  },
+  "invalid expiration time starkware": {
+    "header": {
+      "t": "eip191"
+    },
+    "network": "starkware",
+    "payload": {
+      "domain": "signin.io",
+      "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
+      "statement": "Sign-In With Starkware Example Statement",
+      "uri": "https://signin.io",
+      "version": "1",
+      "nonce": "asd8asdf",
+      "issuedAt": "2021-04-04T11:21:13.464Z",
+      "chainId": 1,
+      "expirationTime": "2022-22-32T00:00:00.000Z"
+    },
+    "signature": {
+      "t": "eip191",
+      "s": [
+        "118100204109122388941793109664257822188151215240923875523810090820787550281",
+        "3302940160864445959923306653323494720255550626151039794263555019062668706883"
+      ]
+    }
+  }
+}

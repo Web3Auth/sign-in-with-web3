@@ -1,0 +1,31 @@
+name: Build & Release
+
+on: [push]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        node: ["18.x"]
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Build
+        run: npm run build
+
+      - name: Run tests
+        run: npm run test
