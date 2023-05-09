@@ -1,0 +1,43 @@
+{
+  "example message solana": {
+    "header": {
+      "t": "sip99"
+    },
+    "payload": {
+      "domain": "login.xyz",
+      "address": "HdNrHhbvY1FM79T7tSDAu9D7sy5gNEqJvqGe7BrBkio9",
+      "statement": "Sign-In With Solana Example Statement",
+      "uri": "https://login.xyz",
+      "version": "1",
+      "nonce": "bTyXgcQxn2htgkjJn",
+      "issuedAt": "2022-01-27T17:09:38.578Z",
+      "chainId": 1,
+      "expirationTime": "2100-01-07T14:31:43.952Z"
+    },
+    "signature": {
+      "s": "3XnLTn7ro1BGdRBNakwdMMmXrE3o4g8sBVQZpboD3T4AbnrzMgwM1AypJTPrp1qt2DBDxt3vDfdzwzupNkHPdVbj",
+      "t": "sip99"
+    },
+    "network": "solana"
+  },
+  "without expiration solana": {
+    "header": {
+      "t": "sip99"
+    },
+    "payload": {
+      "domain": "login.xyz",
+      "address": "HdNrHhbvY1FM79T7tSDAu9D7sy5gNEqJvqGe7BrBkio9",
+      "statement": "Sign-In With Solana Example Statement",
+      "uri": "https://login.xyz",
+      "version": "1",
+      "nonce": "bTyXgcQxn2htgkjJn",
+      "issuedAt": "2022-01-27T17:09:38.578Z",
+      "chainId": 1
+    },
+    "signature": {
+      "s": "22ACJ9Y3ypH8vo3zV5vy7dp9S3oZWAXzbxsohHL9bw24M6XjKo1Ti5ZkgKmP2R3Jq5Wks4R1Eq41dB6SXF8NMC6G",
+      "t": "sip99"
+    },
+    "network": "solana"
+  }
+}

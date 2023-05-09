@@ -16,6 +16,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
-  "include": ["src", "tests/client.spec.ts"],
+  "include": ["src", "test/client.spec.ts"],
   "exclude": ["node_modules", "dist"]
 }

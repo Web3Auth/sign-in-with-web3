@@ -1,10 +1,22 @@
-import { randomStringForEntropy } from "@stablelib/random";
 import { SIWEthereum } from "@web3auth/sign-in-with-ethereum";
 import { SIWS } from "@web3auth/sign-in-with-solana";
 import { SIWStarkware } from "@web3auth/sign-in-with-starkware";
+import nodeCrypto from "crypto";
 
 import { getNetworkFromMessage } from "./regex";
 import { Header, Payload, Signature } from "./types";
+
+const browserCrypto = global.crypto || global.msCrypto || {};
+
+function randomBytes(size: number): Buffer {
+  const arr = new Uint8Array(size);
+  if (typeof browserCrypto.getRandomValues === "undefined") {
+    return Buffer.from(nodeCrypto.randomBytes(size));
+  }
+  browserCrypto.getRandomValues(arr);
+
+  return Buffer.from(arr);
+}
 
 export class SIWWeb3 {
   header: Header;
@@ -71,7 +83,7 @@ export class SIWWeb3 {
       this.payload.chainId = parseInt(this.payload.chainId);
     }
     if (!this.payload.nonce) {
-      this.payload.nonce = randomStringForEntropy(96);
+      this.payload.nonce = randomBytes(8).toString("hex");
     }
     if (!this.payload.issuedAt) {
       this.payload.issuedAt = new Date().toISOString();
