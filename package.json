@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/web3auth/sign-in-with-web3#readme",
   "dependencies": {
-    "@web3auth/sign-in-with-ethereum": "^2.0.0",
+    "@web3auth/sign-in-with-ethereum": "^2.0.1",
     "@web3auth/sign-in-with-solana": "^2.0.0",
-    "@web3auth/sign-in-with-starkware": "^2.0.0"
+    "@web3auth/sign-in-with-starkware": "^2.0.1"
   },
   "devDependencies": {
     "bs58": "^5.0.0",
