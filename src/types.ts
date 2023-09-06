@@ -9,6 +9,7 @@ export class Signature {
 
   m?: SignatureMeta; // signature related metadata (optional)
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   s: any; // signature
 }
 
