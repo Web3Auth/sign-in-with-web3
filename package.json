@@ -25,43 +25,36 @@
   },
   "homepage": "https://github.com/web3auth/sign-in-with-web3#readme",
   "dependencies": {
-    "@web3auth/sign-in-with-ethereum": "^2.0.1",
-    "@web3auth/sign-in-with-solana": "^2.0.0",
-    "@web3auth/sign-in-with-starkware": "^2.0.1"
+    "@web3auth/sign-in-with-ethereum": "^3.0.0",
+    "@web3auth/sign-in-with-solana": "^3.0.0",
+    "@web3auth/sign-in-with-starkware": "^3.0.0"
   },
   "devDependencies": {
-    "bs58": "^5.0.0",
+    "@babel/register": "^7.22.15",
+    "@toruslabs/config": "^2.0.2",
+    "@toruslabs/eslint-config-typescript": "^3.0.1",
+    "@toruslabs/torus-scripts": "^5.0.4",
     "@toruslabs/tweetnacl-js": "^1.0.4",
-    "starknet": "^4.22.0",
-    "@babel/register": "^7.21.0",
-    "@toruslabs/eslint-config-typescript": "^2.0.0",
-    "@toruslabs/torus-scripts": "^4.0.0",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^18",
-    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@types/node": "^20",
+    "bs58": "^5.0.0",
     "cross-env": "^7.0.3",
-    "eslint": "^8.40.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-mocha": "^10.1.0",
-    "eslint-plugin-n": "^15.7.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "eslint-plugin-tsdoc": "^0.2.17",
-    "ethers": "^6.3.0",
-    "mocha": "^10.2.0",
+    "eslint": "^8.48.0",
+    "ethers": "^6.7.1",
     "loglevel": "^1.8.1",
-    "prettier": "^2.8.8",
-    "rimraf": "^5.0.0",
+    "mocha": "^10.2.0",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.1",
+    "starknet": "^4.22.0",
     "ts-node": "^10.9.1",
-    "typescript": "^4.6.3"
+    "typescript": "^5.2.2"
   },
   "files": [
     "dist",
     "src"
   ],
   "engines": {
-    "node": ">=16.18.1",
-    "npm": ">=8"
+    "node": ">=18.x",
+    "npm": ">=9.x"
   }
 }

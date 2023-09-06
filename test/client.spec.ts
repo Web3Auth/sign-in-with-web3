@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable mocha/max-top-level-suites */
 /* eslint-disable mocha/no-setup-in-describe */
 import nacl from "@toruslabs/tweetnacl-js";
@@ -104,7 +103,7 @@ describe(`Message Validation`, function () {
         assert(Object.values(ErrorTypesEthereum).includes(error.error.type));
       } catch (error) {
         // this is for time error
-        assert(Object.values(ErrorTypesEthereum).includes(error.message));
+        assert((Object.values(ErrorTypesEthereum) as string[]).includes((error as Error).message));
       }
     });
   });
@@ -118,7 +117,7 @@ describe(`Message Validation`, function () {
         assert(Object.values(ErrorTypesSolana).includes(error.error.type));
       } catch (error) {
         // this is for time error
-        assert(Object.values(ErrorTypesSolana).includes(error.message));
+        assert((Object.values(ErrorTypesEthereum) as string[]).includes((error as Error).message));
       }
     });
   });
@@ -133,7 +132,7 @@ describe(`Message Validation`, function () {
         assert(Object.values(ErrorTypesStarkware).includes(error.error.type));
       } catch (error) {
         // this is for time error
-        assert(Object.values(ErrorTypesStarkware).includes(error.message));
+        assert((Object.values(ErrorTypesEthereum) as string[]).includes((error as Error).message));
       }
     });
   });
