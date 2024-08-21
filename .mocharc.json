@@ -1,7 +1,8 @@
 {
-    "require": ["./test/setup.mjs"],
-    "spec": "./test/client.spec.ts",
-    "extension": ["js", "ts"],
-    "timeout": 0,
-    "exit": true
-  }
+  "node-option": ["experimental-specifier-resolution=node", "import=tsx"],
+  "require": ["./test/setup.mjs"],
+  "spec": "./test/client.spec.ts",
+  "extension": ["js", "ts"],
+  "timeout": 0,
+  "exit": true
+}
