@@ -1,19 +1,16 @@
 import { SIWEthereum } from "@web3auth/sign-in-with-ethereum";
 import { SIWS } from "@web3auth/sign-in-with-solana";
 import { SIWStarkware } from "@web3auth/sign-in-with-starkware";
-import nodeCrypto from "crypto";
 
 import { getNetworkFromMessage } from "./regex";
 import { Header, Payload, Signature } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const browserCrypto = global.crypto || (global as any).msCrypto || {};
+const browserCrypto = globalThis.crypto || (globalThis as any).msCrypto || {};
 
 function randomBytes(size: number): Buffer {
   const arr = new Uint8Array(size);
-  if (typeof browserCrypto.getRandomValues === "undefined") {
-    return Buffer.from(nodeCrypto.randomBytes(size));
-  }
+
   browserCrypto.getRandomValues(arr);
 
   return Buffer.from(arr);

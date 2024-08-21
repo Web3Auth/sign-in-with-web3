@@ -1,9 +1,5 @@
+/* eslint-disable import/extensions */
 import register from "@babel/register";
-import path from "path";
-import { register as tsRegister } from "ts-node";
+import config from "@toruslabs/config/babel-test.config.js";
 
-tsRegister({ project: path.resolve("tsconfig.json") });
-
-register({
-  extensions: [".ts", ".js"],
-});
+register(config);

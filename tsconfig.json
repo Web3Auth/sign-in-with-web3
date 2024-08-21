@@ -1,5 +1,5 @@
 {
   "extends": "@toruslabs/config/tsconfig.default.json",
-  "include": ["src", "test/client.spec.ts"],
+  "include": ["src", "test"],
   "exclude": ["node_modules", "dist"]
 }

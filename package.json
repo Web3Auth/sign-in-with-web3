@@ -2,11 +2,12 @@
   "name": "@web3auth/sign-in-with-web3",
   "version": "3.1.0",
   "description": "",
-  "main": "dist/signInWithWeb3.cjs.js",
-  "module": "dist/signInWithWeb3.esm.js",
+  "main": "dist/lib.cjs/index.js",
+  "module": "dist/lib.esm/index.js",
   "unpkg": "dist/signInWithWeb3.umd.min.js",
   "jsdelivr": "dist/signInWithWeb3.umd.min.js",
   "types": "dist/types/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "release": "torus-scripts release",
     "build": "torus-scripts build",
@@ -25,29 +26,29 @@
   },
   "homepage": "https://github.com/web3auth/sign-in-with-web3#readme",
   "dependencies": {
-    "@web3auth/sign-in-with-ethereum": "^3.1.0",
-    "@web3auth/sign-in-with-solana": "^3.1.0",
-    "@web3auth/sign-in-with-starkware": "^3.1.0"
+    "@web3auth/sign-in-with-ethereum": "^4.0.0",
+    "@web3auth/sign-in-with-solana": "^4.0.0",
+    "@web3auth/sign-in-with-starkware": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/register": "^7.23.7",
-    "@toruslabs/config": "^2.0.2",
-    "@toruslabs/eslint-config-typescript": "^3.2.0",
-    "@toruslabs/torus-scripts": "^5.3.0",
+    "@babel/register": "^7.24.6",
+    "@toruslabs/config": "^2.2.0",
+    "@toruslabs/eslint-config-typescript": "^3.3.3",
+    "@toruslabs/torus-scripts": "^6.1.1",
     "@toruslabs/tweetnacl-js": "^1.0.4",
-    "@types/mocha": "^10.0.6",
+    "@types/mocha": "^10.0.7",
     "@types/node": "^20",
     "bs58": "^5.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.48.0",
-    "ethers": "^6.11.1",
+    "ethers": "^6.13.2",
     "loglevel": "^1.9.1",
-    "mocha": "^10.4.0",
-    "prettier": "^3.2.5",
-    "rimraf": "^5.0.5",
+    "mocha": "^10.7.3",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
     "starknet": "^4.22.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.4"
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4"
   },
   "files": [
     "dist"

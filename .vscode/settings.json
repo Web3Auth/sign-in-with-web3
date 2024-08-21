@@ -1,3 +1,6 @@
 {
-  "cSpell.words": ["jrpc", "jsdelivr", "loglevel", "openlogin", "proxied", "ethereum", "Topup", "toruslabs"]
+  "cSpell.words": ["jrpc", "jsdelivr", "loglevel", "openlogin", "proxied", "ethereum", "Topup", "toruslabs"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
 }
