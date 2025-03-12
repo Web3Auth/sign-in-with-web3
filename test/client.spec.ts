@@ -1,6 +1,3 @@
-/* eslint-disable mocha/max-top-level-suites */
-/* eslint-disable mocha/no-setup-in-describe */
-import { describe, expect, it } from "vitest";
 import nacl from "@toruslabs/tweetnacl-js";
 import { ErrorTypes as ErrorTypesEthereum } from "@web3auth/sign-in-with-ethereum";
 import { ErrorTypes as ErrorTypesSolana } from "@web3auth/sign-in-with-solana";
@@ -8,6 +5,7 @@ import { ErrorTypes as ErrorTypesStarkware } from "@web3auth/sign-in-with-starkw
 import base58 from "bs58";
 import { Wallet } from "ethers";
 import { ec, hash, stark, typedData } from "starknet";
+import { describe, expect, it } from "vitest";
 
 import { Signature, SIWWeb3 } from "../src/index";
 import parsingPositiveEthereum from "./parsing_positive_ethereum.json";
@@ -208,7 +206,6 @@ describe.skip(`Round Trip Starkware`, () => {
       signature.s = ec.sign(starkKeyPair, typedData.getMessageHash(typedMessage, payload.address));
       signature.t = "eip191";
       const success = await msg.verify(payload, signature, starkKeyPair);
-      console.log('>>>>',success);
       expect(success.success).toBe(true);
     });
   });
