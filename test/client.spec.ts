@@ -1,4 +1,4 @@
-import nacl from "@toruslabs/tweetnacl-js";
+import { randomBytes, sign } from "@toruslabs/tweetnacl-js";
 import { ErrorTypes as ErrorTypesEthereum } from "@web3auth/sign-in-with-ethereum";
 import { ErrorTypes as ErrorTypesSolana } from "@web3auth/sign-in-with-solana";
 import { ErrorTypes as ErrorTypesStarkware } from "@web3auth/sign-in-with-starkware";
@@ -154,15 +154,15 @@ describe(`Round Trip Ethereum`, () => {
 });
 
 describe(`Round Trip Solana`, () => {
-  const rbytes = nacl.randomBytes(32);
-  const keypair = nacl.sign.keyPair.fromSeed(rbytes);
+  const rbytes = randomBytes(32);
+  const keypair = sign.keyPair.fromSeed(rbytes);
   Object.entries(parsingPositiveSolana).forEach(([test, value]) => {
     it(`Generates a Successfully Verifying message: ${test}`, async () => {
       const { payload, network, header } = value.fields;
       payload.address = base58.encode(keypair.publicKey);
       const msg = new SIWWeb3({ payload, network, header });
       const encodedMessage = new TextEncoder().encode(msg.prepareMessage());
-      const signatureEncoded = base58.encode(nacl.sign.detached(encodedMessage, keypair.secretKey));
+      const signatureEncoded = base58.encode(sign.detached(encodedMessage, keypair.secretKey));
       const signature = new Signature();
       signature.s = signatureEncoded;
       signature.t = "sip99";
