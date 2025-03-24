@@ -2,7 +2,7 @@ import nacl from "@toruslabs/tweetnacl-js";
 import { ErrorTypes as ErrorTypesEthereum } from "@web3auth/sign-in-with-ethereum";
 import { ErrorTypes as ErrorTypesSolana } from "@web3auth/sign-in-with-solana";
 import { ErrorTypes as ErrorTypesStarkware } from "@web3auth/sign-in-with-starkware";
-import base58 from "bs58";
+import { bs58 as base58 } from "@toruslabs/bs58";
 import { Wallet } from "ethers";
 import { ec, hash, stark, typedData } from "starknet";
 import { describe, expect, it } from "vitest";
@@ -185,11 +185,7 @@ describe.skip(`Round Trip Starkware`, () => {
       const signature = new Signature();
       const message = hash.starknetKeccak(msg.prepareMessage()).toString("hex").substring(0, 31);
       const typedMessage: typedData.TypedData = {
-        domain: {
-          name: "Example DApp",
-          chainId: payload.chainId,
-          version: "0.0.1",
-        },
+        domain: { name: "Example DApp", chainId: payload.chainId, version: "0.0.1" },
         types: {
           StarkNetDomain: [
             { name: "name", type: "felt" },
@@ -199,9 +195,7 @@ describe.skip(`Round Trip Starkware`, () => {
           Message: [{ name: "message", type: "felt" }],
         },
         primaryType: "Message",
-        message: {
-          message,
-        },
+        message: { message },
       };
       signature.s = ec.sign(starkKeyPair, typedData.getMessageHash(typedMessage, payload.address));
       signature.t = "eip191";
