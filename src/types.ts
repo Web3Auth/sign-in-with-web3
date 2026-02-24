@@ -73,6 +73,15 @@ export enum ErrorTypes {
   /** `nonce` don't match the nonce provided for verification. */
   NONCE_MISMATCH = "Nonce do not match provided nonce for verification.",
 
+  /** `address` don't match the address provided for verification. */
+  ADDRESS_MISMATCH = "Address do not match provided address for verification.",
+
+  /** `uri` don't match the URI provided for verification. */
+  URI_MISMATCH = "URI do not match provided URI for verification.",
+
+  /** `chainId` don't match the chain ID provided for verification. */
+  CHAIN_ID_MISMATCH = "Chain ID do not match provided chain ID for verification.",
+
   /** `address` is not a valid address. */
   INVALID_ADDRESS = "Invalid address.",
 

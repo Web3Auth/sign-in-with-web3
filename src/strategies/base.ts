@@ -87,7 +87,7 @@ export abstract class SIWBase {
   }
 
   validate() {
-    if (this.payload.domain.length === 0 || !/[^#?]*/.test(this.payload.domain)) {
+    if (!/^[^#?]+$/.test(this.payload.domain)) {
       throw new SignInWithWeb3Error(ErrorTypes.INVALID_DOMAIN, `${this.payload.domain} to be a valid domain.`);
     }
 
@@ -101,7 +101,7 @@ export abstract class SIWBase {
 
     const nonce = this.payload.nonce.match(/[a-zA-Z0-9]{8,}/);
     if (!nonce || this.payload.nonce.length < 8 || nonce[0] !== this.payload.nonce) {
-      throw new SignInWithWeb3Error(ErrorTypes.INVALID_NONCE, `Length > 8 (${nonce.length}). Alphanumeric.`, this.payload.nonce);
+      throw new SignInWithWeb3Error(ErrorTypes.INVALID_NONCE, `Length > 8 (${this.payload.nonce.length}). Alphanumeric.`, this.payload.nonce);
     }
 
     const ISO8601 =
@@ -145,6 +145,30 @@ export abstract class SIWBase {
       };
     }
 
+    if (payload.address && payload.address !== this.payload.address) {
+      return {
+        success: false,
+        data: this,
+        error: new SignInWithWeb3Error(ErrorTypes.ADDRESS_MISMATCH, payload.address, this.payload.address),
+      };
+    }
+
+    if (payload.uri && payload.uri !== this.payload.uri) {
+      return {
+        success: false,
+        data: this,
+        error: new SignInWithWeb3Error(ErrorTypes.URI_MISMATCH, payload.uri, this.payload.uri),
+      };
+    }
+
+    if (payload.chainId && payload.chainId !== this.payload.chainId) {
+      return {
+        success: false,
+        data: this,
+        error: new SignInWithWeb3Error(ErrorTypes.CHAIN_ID_MISMATCH, String(payload.chainId), String(this.payload.chainId)),
+      };
+    }
+
     const checkTime = new Date();
 
     if (this.payload.expirationTime) {
@@ -169,7 +193,7 @@ export abstract class SIWBase {
           success: false,
           data: this,
           error: new SignInWithWeb3Error(
-            ErrorTypes.EXPIRED_MESSAGE,
+            ErrorTypes.NOT_YET_VALID_MESSAGE,
             `${checkTime.toISOString()} >= ${notBefore.toISOString()}`,
             `${checkTime.toISOString()} < ${notBefore.toISOString()}`
           ),
