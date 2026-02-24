@@ -57,7 +57,7 @@ export async function eipVerifyMessage({
   throw new Error(`Unexpected result from UniversalValidator: ${callResult}`);
 }
 
-export class SIWEthereum extends SIWBase {
+export class SIWE extends SIWBase {
   readonly networkName = "Ethereum";
 
   protected parseMessage(msg: string): ParsedMessageFields {
@@ -93,6 +93,6 @@ export class SIWEthereum extends SIWBase {
 
 export const ethereumStrategy = {
   network: "ethereum" as const,
-  parse: (msg: string) => new SIWEthereum(msg),
-  create: (params: Partial<SIWBase>) => new SIWEthereum(params),
+  parse: (msg: string) => new SIWE(msg),
+  create: (params: Partial<SIWBase>) => new SIWE(params),
 };
