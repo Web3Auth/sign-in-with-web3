@@ -1,3 +1,4 @@
+import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -7,7 +8,7 @@ export default defineConfig({
     browser: {
       screenshotFailures: false,
       headless: true,
-      provider: "playwright",
+      provider: playwright(),
       enabled: true,
       instances: [
         { name: "Chrome", browser: "chromium" },

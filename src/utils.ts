@@ -12,3 +12,5 @@ export const createInfuraUrl = (url: string, projectId: string): string => {
   parts[parts.length - 1] = projectId;
   return parts.join("/");
 };
+
+export { bytesToHex } from "@noble/curves/utils.js";

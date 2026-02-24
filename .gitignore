@@ -29,3 +29,5 @@ toruslabs-ethereum-embed*
 
 .parcel-cache
 react-app/dist
+
+.eslintcache

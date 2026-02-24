@@ -3,7 +3,7 @@ import { SIWBase } from "./strategies/base";
 import { ethereumStrategy } from "./strategies/ethereum";
 import { solanaStrategy } from "./strategies/solana";
 import { Header, Payload, Signature, SignInWithWeb3Response, VerifyParams } from "./types";
-import { randomBytes } from "./utils";
+import { bytesToHex, randomBytes } from "./utils";
 
 interface Strategy {
   network: string;
@@ -49,7 +49,7 @@ export class SIWWeb3 {
       this.payload.chainId = parseInt(this.payload.chainId);
     }
     if (!this.payload.nonce) {
-      this.payload.nonce = randomBytes(8).toString("hex");
+      this.payload.nonce = bytesToHex(randomBytes(8));
     }
     if (!this.payload.issuedAt) {
       this.payload.issuedAt = new Date().toISOString();

@@ -2,7 +2,7 @@ import { isUri } from "valid-url";
 
 import { ParsedMessageFields } from "../regex";
 import { ErrorTypes, Header, Payload, Signature, SignInWithWeb3Error, SignInWithWeb3Response, VerifyParams } from "../types";
-import { randomBytes } from "../utils";
+import { bytesToHex, randomBytes } from "../utils";
 
 export abstract class SIWBase {
   header: Header;
@@ -39,7 +39,7 @@ export abstract class SIWBase {
         this.payload.chainId = parseInt(this.payload.chainId);
       }
       if (!this.payload.nonce) {
-        this.payload.nonce = randomBytes(8).toString("hex");
+        this.payload.nonce = bytesToHex(randomBytes(8));
       }
     }
   }
