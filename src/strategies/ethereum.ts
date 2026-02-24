@@ -77,6 +77,9 @@ export class SIWE extends SIWBase {
           throw new Error("Unsupported chainId");
         }
         const infuraKey = process.env.VITE_APP_INFURA_PROJECT_KEY;
+        if (rpcTarget.includes("infura") && !infuraKey) {
+          throw new Error("EIP-1271 verification requires an Infura project key for this chain");
+        }
         const finalRpcTarget = rpcTarget.includes("infura") ? createInfuraUrl(rpcTarget, infuraKey) : rpcTarget;
         const provider = new JsonRpcProvider(finalRpcTarget, {
           chainId: payload.chainId,

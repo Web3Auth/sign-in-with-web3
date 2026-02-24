@@ -32,6 +32,9 @@ export abstract class SIWBase {
       };
     } else {
       Object.assign(this, param);
+      if (!this.payload) {
+        throw new SignInWithWeb3Error(ErrorTypes.UNABLE_TO_PARSE, "payload is required");
+      }
       if (typeof this.payload.chainId === "string") {
         this.payload.chainId = parseInt(this.payload.chainId);
       }
@@ -75,9 +78,9 @@ export abstract class SIWBase {
     }
 
     const suffix = suffixArray.join("\n");
-    prefix = [prefix, this.payload.statement].join("\n\n");
+    prefix += "\n\n";
     if (this.payload.statement) {
-      prefix += "\n";
+      prefix += this.payload.statement + "\n";
     }
     return [prefix, suffix].join("\n");
   }
