@@ -1,0 +1,28 @@
+import { bs58 as base58 } from "@toruslabs/bs58";
+import { sign } from "@toruslabs/tweetnacl-js";
+
+import { ParsedMessageFields, parseMessage } from "../regex";
+import { Payload, Signature } from "../types";
+import { SIWBase } from "./base";
+
+const SOLANA_ADDRESS_PATTERN = "[a-zA-Z0-9]{32,44}";
+
+export class SIWSolana extends SIWBase {
+  readonly networkName = "Solana";
+
+  protected parseMessage(msg: string): ParsedMessageFields {
+    return parseMessage("Solana", SOLANA_ADDRESS_PATTERN, msg);
+  }
+
+  protected async verifySignature(_message: string, payload: Payload, signature: Signature): Promise<boolean> {
+    const message = this.prepareMessage();
+    const encodedMessage = new TextEncoder().encode(message);
+    return sign.detached.verify(encodedMessage, base58.decode(signature.s), base58.decode(payload.address));
+  }
+}
+
+export const solanaStrategy = {
+  network: "solana" as const,
+  parse: (msg: string) => new SIWSolana(msg),
+  create: (params: Partial<SIWBase>) => new SIWSolana(params),
+};

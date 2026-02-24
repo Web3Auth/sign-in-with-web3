@@ -20,6 +20,6 @@ export default defineConfig({
       provider: "istanbul",
       include: ["src/**/*.ts"],
     },
-    include: ["test/**/*.spec.ts"],
+    include: ["test/**/*.test.ts"],
   },
 });
