@@ -127,7 +127,13 @@ export class SignInWithWeb3Error extends Error {
   }
 }
 
-export interface VerifyParams {
+export interface VerifyOptions {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  kp?: any;
+  rpcTarget?: string;
+}
+
+export interface VerifyParams extends VerifyOptions {
   [key: string]: unknown;
   payload: Payload;
   signature: Signature;

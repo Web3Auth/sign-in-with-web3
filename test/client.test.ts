@@ -1,7 +1,7 @@
 import { bs58 as base58 } from "@toruslabs/bs58";
 import { randomBytes, sign } from "@toruslabs/tweetnacl-js";
-import { Wallet } from "ethers";
 import { describe, expect, it } from "vitest";
+import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
 import { ErrorTypes, Signature, SIWWeb3 } from "../src/index";
 import parsingPositiveEthereum from "./parsing_positive_ethereum.json";
@@ -90,15 +90,15 @@ describe(`Message Validation`, () => {
 });
 
 describe(`Round Trip Ethereum`, () => {
-  const wallet = Wallet.createRandom();
+  const account = privateKeyToAccount(generatePrivateKey());
 
   Object.entries(parsingPositiveEthereum).forEach(([test, el]) => {
     it(`Generates a Successfully Verifying message: ${test}`, async () => {
       const { payload, network, header } = el.fields;
-      payload.address = wallet.address;
+      payload.address = account.address;
       const msg = new SIWWeb3({ payload, network, header });
       const signature = new Signature();
-      signature.s = await wallet.signMessage(msg.toMessage());
+      signature.s = await account.signMessage({ message: msg.toMessage() });
       signature.t = "eip191";
       const success = await msg.verify(payload, signature);
       expect(success.success).toBe(true);
@@ -119,7 +119,7 @@ describe(`Round Trip Solana`, () => {
       const signature = new Signature();
       signature.s = signatureEncoded;
       signature.t = "sip99";
-      const { success } = await msg.verify(payload, signature, keypair);
+      const { success } = await msg.verify(payload, signature, { kp: keypair });
       expect(success).toBe(true);
     });
   });

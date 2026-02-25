@@ -27,10 +27,9 @@
   "homepage": "https://github.com/web3auth/sign-in-with-web3#readme",
   "dependencies": {
     "@toruslabs/bs58": "^1.0.0",
-    "@toruslabs/ethereum-controllers": "^8.0.0",
     "@toruslabs/tweetnacl-js": "^1.0.4",
-    "ethers": "^6.13.5",
-    "valid-url": "^1.0.9"
+    "valid-url": "^1.0.9",
+    "viem": "^2.23.0"
   },
   "devDependencies": {
     "@babel/register": "^7.25.9",

@@ -1,9 +1,10 @@
+import { generateSiweNonce } from "viem/siwe";
+
 import { getNetworkFromMessage } from "./regex";
 import { SIWBase } from "./strategies/base";
 import { ethereumStrategy } from "./strategies/ethereum";
 import { solanaStrategy } from "./strategies/solana";
-import { Header, Payload, Signature, SignInWithWeb3Response, VerifyParams } from "./types";
-import { randomBytes } from "./utils";
+import { Header, Payload, Signature, SignInWithWeb3Response, VerifyOptions, VerifyParams } from "./types";
 
 interface Strategy {
   network: string;
@@ -49,7 +50,7 @@ export class SIWWeb3 {
       this.payload.chainId = parseInt(this.payload.chainId);
     }
     if (!this.payload.nonce) {
-      this.payload.nonce = randomBytes(8).toString("hex");
+      this.payload.nonce = generateSiweNonce();
     }
     if (!this.payload.issuedAt) {
       this.payload.issuedAt = new Date().toISOString();
@@ -76,12 +77,8 @@ export class SIWWeb3 {
     return this.instance.prepareMessage();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async verify(payload: Payload, signature: Signature, ...extra: any[]): Promise<SignInWithWeb3Response> {
-    const verifyParams: VerifyParams = { payload, signature };
-    if (extra.length > 0) {
-      verifyParams.kp = extra[0];
-    }
+  async verify(payload: Payload, signature: Signature, options?: VerifyOptions): Promise<SignInWithWeb3Response> {
+    const verifyParams: VerifyParams = { payload, signature, ...options };
     return this.instance.verify(verifyParams);
   }
 }
