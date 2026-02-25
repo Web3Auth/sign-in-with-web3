@@ -2,8 +2,6 @@ import { generateSiweNonce } from "viem/siwe";
 
 import { getChainFromMessage } from "./regex";
 import { SIWBase } from "./strategies/base";
-import { ethereumStrategy } from "./strategies/ethereum";
-import { solanaStrategy } from "./strategies/solana";
 import { Header, Payload, Signature, SignInWithWeb3Response, VerifyOptions, VerifyParams } from "./types";
 
 interface Strategy {
