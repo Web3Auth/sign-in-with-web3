@@ -11,18 +11,19 @@ const NOT_BEFORE = `(\\nNot Before: (?<notBefore>${DATETIME}))?`;
 const REQUEST_ID = "(\\nRequest ID: (?<requestId>[-._~!$&'()*+,;=:@%a-zA-Z0-9]*))?";
 const RESOURCES = `(\\nResources:(?<resources>(\\n- ${URI}?)+))?`;
 
-const NETWORK_DETECT = "sign in with your (?<network>([^*]*)) account:";
+const CHAIN_DETECT = "sign in with your (?<chain>([^*]*)) account:";
 
-export function getNetworkFromMessage(msg: string) {
-  const REGEX = new RegExp(NETWORK_DETECT, "g");
+export function getChainFromMessage(msg: string) {
+  const REGEX = new RegExp(CHAIN_DETECT, "g");
   const match = REGEX.exec(msg);
   if (!match) {
     throw new Error("Message did not match the regular expression.");
   }
-  return match?.groups?.network;
+  return match?.groups?.chain;
 }
 
 export interface ParsedMessageFields {
+  scheme: string | null;
   domain: string;
   address: string;
   statement: string | null;
@@ -37,8 +38,9 @@ export interface ParsedMessageFields {
   resources: string[] | null;
 }
 
-export function parseMessage(networkName: string, addressPattern: string, msg: string): ParsedMessageFields {
-  const DOMAIN = `(?<domain>([^?#]*)) wants you to sign in with your ${networkName} account:`;
+export function parseMessage(chainName: string, addressPattern: string, msg: string): ParsedMessageFields {
+  const SCHEME = "(?:(?<scheme>[a-zA-Z][a-zA-Z0-9+\\-.]*):\/\/)?";
+  const DOMAIN = `${SCHEME}(?<domain>[a-zA-Z0-9+\\-.]*(?::[0-9]{1,5})?) wants you to sign in with your ${chainName} account:`;
   const ADDRESS = `\\n(?<address>${addressPattern})\\n\\n`;
   const MESSAGE = `^${DOMAIN}${ADDRESS}${STATEMENT}${URI_LINE}${VERSION}${CHAIN_ID}${NONCE}${ISSUED_AT}${EXPIRATION_TIME}${NOT_BEFORE}${REQUEST_ID}${RESOURCES}$`;
 
@@ -48,6 +50,7 @@ export function parseMessage(networkName: string, addressPattern: string, msg: s
     throw new Error("Message did not match the regular expression.");
   }
   return {
+    scheme: match?.groups?.scheme,
     domain: match?.groups?.domain,
     address: match?.groups?.address,
     statement: match?.groups?.statement,

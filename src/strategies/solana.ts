@@ -8,7 +8,7 @@ import { SIWBase } from "./base";
 const SOLANA_ADDRESS_PATTERN = "[a-zA-Z0-9]{32,44}";
 
 export class SIWS extends SIWBase {
-  readonly networkName = "Solana";
+  readonly chainName = "Solana";
 
   protected parseMessage(msg: string): ParsedMessageFields {
     return parseMessage("Solana", SOLANA_ADDRESS_PATTERN, msg);
@@ -22,7 +22,7 @@ export class SIWS extends SIWBase {
 }
 
 export const solanaStrategy = {
-  network: "solana" as const,
+  chain: "solana" as const,
   parse: (msg: string) => new SIWS(msg),
   create: (params: Partial<SIWBase>) => new SIWS(params),
 };

@@ -15,6 +15,9 @@ export class Header {
 }
 
 export class Payload {
+  /** RFC 3986 URI scheme of the origin of the request. */
+  scheme?: string;
+
   /** RFC 4501 dns authority that is requesting the signing. */
   domain: string;
 

@@ -11,12 +11,13 @@ export abstract class SIWBase {
 
   signature: Signature;
 
-  abstract readonly networkName: string;
+  abstract readonly chainName: string;
 
   constructor(param: string | Partial<SIWBase>) {
     if (typeof param === "string") {
       const parsed = this.parseMessage(param);
       this.payload = {
+        scheme: parsed.scheme,
         domain: parsed.domain,
         address: parsed.address,
         statement: parsed.statement,
@@ -35,9 +36,6 @@ export abstract class SIWBase {
       if (!this.payload) {
         throw new SignInWithWeb3Error(ErrorTypes.UNABLE_TO_PARSE, "payload is required");
       }
-      if (typeof this.payload.chainId === "string") {
-        this.payload.chainId = parseInt(this.payload.chainId);
-      }
       if (!this.payload.nonce) {
         this.payload.nonce = generateSiweNonce();
       }
@@ -47,7 +45,8 @@ export abstract class SIWBase {
   toMessage(): string {
     this.validate();
 
-    const header = `${this.payload.domain} wants you to sign in with your ${this.networkName} account:`;
+    const origin = this.payload.scheme ? `${this.payload.scheme}://${this.payload.domain}` : this.payload.domain;
+    const header = `${origin} wants you to sign in with your ${this.chainName} account:`;
     const uriField = `URI: ${this.payload.uri}`;
     let prefix = [header, this.payload.address].join("\n");
     const versionField = `Version: ${this.payload.version}`;
@@ -78,9 +77,9 @@ export abstract class SIWBase {
     }
 
     const suffix = suffixArray.join("\n");
-    prefix += "\n\n";
+    prefix = [prefix, this.payload.statement].join("\n\n");
     if (this.payload.statement) {
-      prefix += this.payload.statement + "\n";
+      prefix += "\n";
     }
     return [prefix, suffix].join("\n");
   }

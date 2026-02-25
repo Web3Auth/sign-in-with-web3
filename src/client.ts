@@ -1,13 +1,13 @@
 import { generateSiweNonce } from "viem/siwe";
 
-import { getNetworkFromMessage } from "./regex";
+import { getChainFromMessage } from "./regex";
 import { SIWBase } from "./strategies/base";
 import { ethereumStrategy } from "./strategies/ethereum";
 import { solanaStrategy } from "./strategies/solana";
 import { Header, Payload, Signature, SignInWithWeb3Response, VerifyOptions, VerifyParams } from "./types";
 
 interface Strategy {
-  network: string;
+  chain: string;
   parse: (msg: string) => SIWBase;
   create: (params: Partial<SIWBase>) => SIWBase;
 }
@@ -19,7 +19,7 @@ export class SIWWeb3 {
 
   signature: Signature;
 
-  network?: string;
+  chain: string;
 
   payload: Payload;
 
@@ -27,21 +27,24 @@ export class SIWWeb3 {
 
   constructor(param: Partial<SIWWeb3> | string) {
     if (typeof param === "string") {
-      const network = getNetworkFromMessage(param);
-      const strategy = SIWWeb3.getStrategy(network);
+      const chain = getChainFromMessage(param);
+      const strategy = SIWWeb3.getStrategy(chain);
       this.instance = strategy.parse(param);
-      this.network = network.toLowerCase();
+      this.chain = chain.toLowerCase();
       this.payload = this.instance.payload;
       this.header = this.instance.header;
       this.signature = this.instance.signature;
       return;
     }
 
-    const network = param.network || "ethereum";
-    const strategy = SIWWeb3.getStrategy(network);
+    if (!param.chain) {
+      throw new Error("chain is required when constructing from an object.");
+    }
+    const chain = param.chain;
+    const strategy = SIWWeb3.getStrategy(chain);
     this.instance = strategy.create({ header: param.header, payload: param.payload, signature: param.signature });
     Object.assign(this, param);
-    this.network = network.toLowerCase();
+    this.chain = chain.toLowerCase();
     this.payload = this.instance.payload;
     this.header = this.instance.header || param.header;
     this.signature = this.instance.signature || param.signature;
@@ -58,13 +61,13 @@ export class SIWWeb3 {
   }
 
   static registerStrategy(strategy: Strategy): void {
-    SIWWeb3.strategies.set(strategy.network.toLowerCase(), strategy);
+    SIWWeb3.strategies.set(strategy.chain.toLowerCase(), strategy);
   }
 
-  static getStrategy(network: string): Strategy {
-    const strategy = SIWWeb3.strategies.get(network.toLowerCase());
+  static getStrategy(chain: string): Strategy {
+    const strategy = SIWWeb3.strategies.get(chain.toLowerCase());
     if (!strategy) {
-      throw new Error(`No strategy registered for network: ${network}. Register one with SIWWeb3.registerStrategy().`);
+      throw new Error(`No strategy registered for chain: ${chain}. Register one with SIWWeb3.registerStrategy().`);
     }
     return strategy;
   }
@@ -82,6 +85,3 @@ export class SIWWeb3 {
     return this.instance.verify(verifyParams);
   }
 }
-
-SIWWeb3.registerStrategy(ethereumStrategy);
-SIWWeb3.registerStrategy(solanaStrategy);

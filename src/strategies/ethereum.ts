@@ -71,7 +71,7 @@ export async function eipVerifyMessage({
 }
 
 export class SIWE extends SIWBase {
-  readonly networkName = "Ethereum";
+  readonly chainName = "Ethereum";
 
   protected parseMessage(msg: string): ParsedMessageFields {
     return parseMessage("Ethereum", ETHEREUM_ADDRESS_PATTERN, msg);
@@ -106,7 +106,7 @@ export class SIWE extends SIWBase {
 }
 
 export const ethereumStrategy = {
-  network: "ethereum" as const,
+  chain: "ethereum" as const,
   parse: (msg: string) => new SIWE(msg),
   create: (params: Partial<SIWBase>) => new SIWE(params),
 };
