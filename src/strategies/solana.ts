@@ -1,5 +1,5 @@
+import { ed25519 } from "@noble/curves/ed25519.js";
 import base58 from "bs58";
-import { sign } from "@toruslabs/tweetnacl-js";
 
 import { ParsedMessageFields, parseMessage } from "../regex";
 import { Payload, Signature, VerifyParams } from "../types";
@@ -17,7 +17,7 @@ export class SIWS extends SIWBase {
   protected async verifySignature(_message: string, payload: Payload, signature: Signature, _params?: VerifyParams): Promise<boolean> {
     const message = this.prepareMessage();
     const encodedMessage = new TextEncoder().encode(message);
-    return sign.detached.verify(encodedMessage, base58.decode(signature.s), base58.decode(payload.address));
+    return ed25519.verify(base58.decode(signature.s), encodedMessage, base58.decode(payload.address));
   }
 }
 

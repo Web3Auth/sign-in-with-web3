@@ -1,5 +1,5 @@
+import { ed25519 } from "@noble/curves/ed25519.js";
 import base58 from "bs58";
-import { randomBytes, sign } from "@toruslabs/tweetnacl-js";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { describe, expect, it } from "vitest";
 
@@ -108,19 +108,19 @@ describe(`Round Trip Ethereum`, () => {
 });
 
 describe(`Round Trip Solana`, () => {
-  const rbytes = randomBytes(32);
-  const keypair = sign.keyPair.fromSeed(rbytes);
+  const privateKey = crypto.getRandomValues(new Uint8Array(32));
+  const publicKey = ed25519.getPublicKey(privateKey);
   Object.entries(parsingPositiveSolana).forEach(([test, value]) => {
     it(`Generates a Successfully Verifying message: ${test}`, async () => {
       const { payload, chain, header } = value.fields;
-      payload.address = base58.encode(keypair.publicKey);
+      payload.address = base58.encode(publicKey);
       const msg = new SIWWeb3({ payload, chain, header });
       const encodedMessage = new TextEncoder().encode(msg.prepareMessage());
-      const signatureEncoded = base58.encode(sign.detached(encodedMessage, keypair.secretKey));
+      const signatureEncoded = base58.encode(ed25519.sign(encodedMessage, privateKey));
       const signature = new Signature();
       signature.s = signatureEncoded;
       signature.t = "sip99";
-      const { success } = await msg.verify(payload, signature, { kp: keypair });
+      const { success } = await msg.verify(payload, signature);
       expect(success).toBe(true);
     });
   });
