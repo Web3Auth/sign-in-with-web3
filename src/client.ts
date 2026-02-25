@@ -1,5 +1,3 @@
-import { generateSiweNonce } from "viem/siwe";
-
 import { getChainFromMessage } from "./regex";
 import { SIWBase } from "./strategies/base";
 import { Header, Payload, Signature, SignInWithWeb3Response, VerifyOptions, VerifyParams } from "./types";
@@ -46,16 +44,6 @@ export class SIWWeb3 {
     this.payload = this.instance.payload;
     this.header = this.instance.header || param.header;
     this.signature = this.instance.signature || param.signature;
-
-    if (typeof this.payload.chainId === "string") {
-      this.payload.chainId = parseInt(this.payload.chainId);
-    }
-    if (!this.payload.nonce) {
-      this.payload.nonce = generateSiweNonce();
-    }
-    if (!this.payload.issuedAt) {
-      this.payload.issuedAt = new Date().toISOString();
-    }
   }
 
   static registerStrategy(strategy: Strategy): void {
