@@ -1,7 +1,7 @@
 import { bs58 as base58 } from "@toruslabs/bs58";
 import { randomBytes, sign } from "@toruslabs/tweetnacl-js";
-import { describe, expect, it } from "vitest";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import { describe, expect, it } from "vitest";
 
 import { ErrorTypes, ethereumStrategy, Signature, SIWWeb3, solanaStrategy } from "../src/index";
 import parsingPositiveEthereum from "./parsing_positive_ethereum.json";
@@ -67,27 +67,25 @@ describe(`Message Validation`, () => {
 
   Object.entries(validationNegativeEthereum).forEach(([test, value]) => {
     it(`Fails to verify message: ${test}`, async () => {
-      try {
+      const result = await (async () => {
         const { payload, signature, chain, header } = value;
         const msg = new SIWWeb3({ payload, chain, header });
-        const error = await msg.verify(payload, signature);
-        expect(Object.values(ErrorTypes)).toContain(error.error.type);
-      } catch (error) {
-        expect(Object.values(ErrorTypes) as string[]).toContain((error as Error).message);
-      }
+        return msg.verify(payload, signature);
+      })().catch((e: Error) => e);
+      const errorType = result instanceof Error ? result.message : result.error.type;
+      expect(Object.values(ErrorTypes) as string[]).toContain(errorType);
     });
   });
 
   Object.entries(validationNegativeSolana).forEach(([test, value]) => {
     it(`Fails to verify message: ${test}`, async () => {
-      try {
+      const result = await (async () => {
         const { payload, signature, chain, header } = value;
         const msg = new SIWWeb3({ payload, chain, header });
-        const error = await msg.verify(payload, signature);
-        expect(Object.values(ErrorTypes)).toContain(error.error.type);
-      } catch (error) {
-        expect(Object.values(ErrorTypes) as string[]).toContain((error as Error).message);
-      }
+        return msg.verify(payload, signature);
+      })().catch((e: Error) => e);
+      const errorType = result instanceof Error ? result.message : result.error.type;
+      expect(Object.values(ErrorTypes) as string[]).toContain(errorType);
     });
   });
 });
