@@ -18,7 +18,7 @@
       "t": "eip191",
       "s": "4nxtXtFgkMXe8Nj9ANPXim8zjXyUm5tXLcaj9EmbiT3yrwkg73FQsZMaU8vN6utvMXWPXCGCtHX9kLfmYL6zcMbU"
     },
-    "network": "ethereum"
+    "chain": "ethereum"
   },
   "malformed signature": {
     "header": {
@@ -39,7 +39,7 @@
       "t": "eip191",
       "s": "56Hfu7LqK79sh6xVXic4M3vUAGfKMWL3vEN5Z3kMkzn8RvLvoHCVbXD3Eg4bnFJj846JDzimK9aFwrWJ9Sy6buQ"
     },
-    "network": "ethereum"
+    "chain": "ethereum"
   },
   "wrong signature": {
     "header": {
@@ -60,7 +60,7 @@
       "t": "eip191",
       "s": "4nxtXtFgkMXe8Nj9ANPXim8zjXyUm5tXLcaj9EmbiT3yrwkg73FQsZMaU8vN6utvMXWPXCGCtHX9kLfmYL6zcMbU"
     },
-    "network": "ethereum"
+    "chain": "ethereum"
   },
   "invalid expiration time": {
     "header": {
@@ -81,6 +81,6 @@
       "t": "eip191",
       "s": "5GdGGKsMZD8JciUEVEVLfxTZjbuixvSQirP9p7EdmoSbfnSapTCGiTEQ2ysiSDvnBDiWEaZjsFVdax5BJsQi1ZxY"
     },
-    "network": "ethereum"
+    "chain": "ethereum"
   }
 }

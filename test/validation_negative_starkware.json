@@ -3,7 +3,7 @@
     "header": {
       "t": "eip191"
     },
-    "network": "starkware",
+    "chain": "starkware",
     "payload": {
       "domain": "localhost:3000",
       "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
@@ -27,7 +27,7 @@
     "header": {
       "t": "eip191"
     },
-    "network": "starkware",
+    "chain": "starkware",
     "payload": {
       "domain": "signin.io",
       "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
@@ -51,7 +51,7 @@
     "header": {
       "t": "eip191"
     },
-    "network": "starkware",
+    "chain": "starkware",
     "payload": {
       "domain": "signin.io",
       "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",
@@ -75,7 +75,7 @@
     "header": {
       "t": "eip191"
     },
-    "network": "starkware",
+    "chain": "starkware",
     "payload": {
       "domain": "signin.io",
       "address": "0x304b0f1d4fe596d0056f7e06ef261d75373d0d230036b3d5c393c8024bf7f55",

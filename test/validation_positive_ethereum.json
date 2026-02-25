@@ -17,7 +17,7 @@
       "s": "0xc0da894b04198482a58a5d043aa9704cdcc414371494093228a9241b0e62514c4860eb08352c37d32c13dd44a2e9d64a0652180e51fcd21b636360f5b16c64001c",
       "t": "eip191"
     },
-    "network": "ethereum"
+    "chain": "ethereum"
   },
   "example message ethereum": {
     "header": {
@@ -38,6 +38,6 @@
       "s": "0xdb770c779e6299de22d13434e89fb76ab52213f8a491c9a3ff030efa2e2de1a5290638cc9dbbdee703f4cf25d5afe96b1f779aae684fd40579380b92e4e66e9e1c",
       "t": "eip191"
     },
-    "network": "ethereum"
+    "chain": "ethereum"
   }
 }

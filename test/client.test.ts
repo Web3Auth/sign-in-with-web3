@@ -3,7 +3,7 @@ import { randomBytes, sign } from "@toruslabs/tweetnacl-js";
 import { describe, expect, it } from "vitest";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 
-import { ErrorTypes, Signature, SIWWeb3 } from "../src/index";
+import { ErrorTypes, ethereumStrategy, Signature, SIWWeb3, solanaStrategy } from "../src/index";
 import parsingPositiveEthereum from "./parsing_positive_ethereum.json";
 import parsingPositiveSolana from "./parsing_positive_solana.json";
 import validationNegativeEthereum from "./validation_negative_ethereum.json";
@@ -11,18 +11,21 @@ import validationNegativeSolana from "./validation_negative_solana.json";
 import validationPositiveEthereum from "./validation_positive_ethereum.json";
 import validationPositiveSolana from "./validation_positive_solana.json";
 
+SIWWeb3.registerStrategy(ethereumStrategy);
+SIWWeb3.registerStrategy(solanaStrategy);
+
 describe(`Message Generation from payload`, () => {
   Object.entries(parsingPositiveEthereum).forEach(([test, value]) => {
     it(`Generates message successfully: ${test}`, () => {
-      const { payload, network, header } = value.fields;
-      const msg = new SIWWeb3({ payload, network, header });
+      const { payload, chain, header } = value.fields;
+      const msg = new SIWWeb3({ payload, chain, header });
       expect(msg.toMessage()).toBe(value.message);
     });
   });
   Object.entries(parsingPositiveSolana).forEach(([test, value]) => {
     it(`Generates message successfully: ${test}`, () => {
-      const { payload, network, header } = value.fields;
-      const msg = new SIWWeb3({ payload, network, header });
+      const { payload, chain, header } = value.fields;
+      const msg = new SIWWeb3({ payload, chain, header });
       expect(msg.toMessage()).toBe(value.message);
     });
   });
@@ -46,8 +49,8 @@ describe(`Message Generation from message`, () => {
 describe(`Message Validation`, () => {
   Object.entries(validationPositiveEthereum).forEach(([test, value]) => {
     it(`Validates message successfully - ethereum : ${test}`, async () => {
-      const { payload, signature, network, header } = value;
-      const msg = new SIWWeb3({ payload, network, header });
+      const { payload, signature, chain, header } = value;
+      const msg = new SIWWeb3({ payload, chain, header });
       const verify = await msg.verify(payload, signature);
       expect(verify.success).toBe(true);
     });
@@ -55,8 +58,8 @@ describe(`Message Validation`, () => {
 
   Object.entries(validationPositiveSolana).forEach(([test, value]) => {
     it(`Validates message successfully - solana: ${test}`, async () => {
-      const { payload, signature, network, header } = value;
-      const msg = new SIWWeb3({ payload, network, header });
+      const { payload, signature, chain, header } = value;
+      const msg = new SIWWeb3({ payload, chain, header });
       const verify = await msg.verify(payload, signature);
       expect(verify.success).toBe(true);
     });
@@ -65,8 +68,8 @@ describe(`Message Validation`, () => {
   Object.entries(validationNegativeEthereum).forEach(([test, value]) => {
     it(`Fails to verify message: ${test}`, async () => {
       try {
-        const { payload, signature, network, header } = value;
-        const msg = new SIWWeb3({ payload, network, header });
+        const { payload, signature, chain, header } = value;
+        const msg = new SIWWeb3({ payload, chain, header });
         const error = await msg.verify(payload, signature);
         expect(Object.values(ErrorTypes)).toContain(error.error.type);
       } catch (error) {
@@ -78,8 +81,8 @@ describe(`Message Validation`, () => {
   Object.entries(validationNegativeSolana).forEach(([test, value]) => {
     it(`Fails to verify message: ${test}`, async () => {
       try {
-        const { payload, signature, network, header } = value;
-        const msg = new SIWWeb3({ payload, network, header });
+        const { payload, signature, chain, header } = value;
+        const msg = new SIWWeb3({ payload, chain, header });
         const error = await msg.verify(payload, signature);
         expect(Object.values(ErrorTypes)).toContain(error.error.type);
       } catch (error) {
@@ -94,9 +97,9 @@ describe(`Round Trip Ethereum`, () => {
 
   Object.entries(parsingPositiveEthereum).forEach(([test, el]) => {
     it(`Generates a Successfully Verifying message: ${test}`, async () => {
-      const { payload, network, header } = el.fields;
+      const { payload, chain, header } = el.fields;
       payload.address = account.address;
-      const msg = new SIWWeb3({ payload, network, header });
+      const msg = new SIWWeb3({ payload, chain, header });
       const signature = new Signature();
       signature.s = await account.signMessage({ message: msg.toMessage() });
       signature.t = "eip191";
@@ -111,9 +114,9 @@ describe(`Round Trip Solana`, () => {
   const keypair = sign.keyPair.fromSeed(rbytes);
   Object.entries(parsingPositiveSolana).forEach(([test, value]) => {
     it(`Generates a Successfully Verifying message: ${test}`, async () => {
-      const { payload, network, header } = value.fields;
+      const { payload, chain, header } = value.fields;
       payload.address = base58.encode(keypair.publicKey);
-      const msg = new SIWWeb3({ payload, network, header });
+      const msg = new SIWWeb3({ payload, chain, header });
       const encodedMessage = new TextEncoder().encode(msg.prepareMessage());
       const signatureEncoded = base58.encode(sign.detached(encodedMessage, keypair.secretKey));
       const signature = new Signature();

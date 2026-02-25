@@ -39,8 +39,8 @@ export interface ParsedMessageFields {
 }
 
 export function parseMessage(chainName: string, addressPattern: string, msg: string): ParsedMessageFields {
-  const SCHEME = "(?:(?<scheme>[a-zA-Z][a-zA-Z0-9+\\-.]*):\\/)?";
-  const DOMAIN = `${SCHEME}(?<domain>[a-zA-Z0-9+\\-.]*(?::[0-9]{1,5})?) wants you to sign in with your ${chainName} account:`;
+  const SCHEME = "(?:(?<scheme>[a-zA-Z][a-zA-Z0-9+\\-.]*):\/\/)?";
+  const DOMAIN = `${SCHEME}(?<domain>([^?#]*)) wants you to sign in with your ${chainName} account:`;
   const ADDRESS = `\\n(?<address>${addressPattern})\\n\\n`;
   const MESSAGE = `^${DOMAIN}${ADDRESS}${STATEMENT}${URI_LINE}${VERSION}${CHAIN_ID}${NONCE}${ISSUED_AT}${EXPIRATION_TIME}${NOT_BEFORE}${REQUEST_ID}${RESOURCES}$`;
 

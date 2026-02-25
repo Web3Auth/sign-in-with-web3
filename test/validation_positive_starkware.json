@@ -20,6 +20,6 @@
       ],
       "t": "eip191"
     },
-    "network": "starkware"
+    "chain": "starkware"
   }
 }
