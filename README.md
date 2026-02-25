@@ -9,7 +9,6 @@ Sign-In with Web3 uses a standard message format compliant with [CAIP-74](https:
 - **Ethereum** — [EIP-4361](https://eips.ethereum.org/EIPS/eip-4361) with EIP-1271/6492 smart contract signature support
 - **Solana** — [SIP-99](https://github.com/AdrenaFoundation/SIPs/blob/main/SIPS/sip-99.md) with ed25519 signature verification
 
-Starknet is supported as an external strategy via `@web3auth/sign-in-with-starkware`.
 
 ## Installation
 
