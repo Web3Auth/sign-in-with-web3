@@ -128,7 +128,7 @@ export abstract class SIWBase {
     }
   }
 
-  async verify(params: VerifyParams): Promise<SignInWithWeb3Response> {
+  async verify<T extends SIWBase>(this: T, params: VerifyParams): Promise<SignInWithWeb3Response<T>> {
     const { payload, signature } = params;
 
     if (payload.domain && payload.domain !== this.payload.domain) {

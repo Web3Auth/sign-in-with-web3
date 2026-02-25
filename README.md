@@ -19,17 +19,26 @@ npm install @web3auth/sign-in-with-web3
 
 ## Usage
 
-### Basic (auto-detects chain)
+### Register strategies
+
+Strategies are not auto-registered. Register the chains you need before using `SIWWeb3`:
 
 ```typescript
-import { SIWWeb3 } from "@web3auth/sign-in-with-web3";
+import { SIWWeb3, ethereumStrategy, solanaStrategy } from "@web3auth/sign-in-with-web3";
 
+SIWWeb3.registerStrategy(ethereumStrategy);
+SIWWeb3.registerStrategy(solanaStrategy);
+```
+
+### Basic
+
+```typescript
 // Parse a signed message string (chain is detected automatically)
 const msg = new SIWWeb3(messageString);
 
-// Or construct from fields
+// Or construct from fields (chain is required)
 const msg = new SIWWeb3({
-  network: "ethereum", // or "solana"
+  chain: "ethereum", // or "solana"
   payload: {
     domain: "example.com",
     address: "0x...",
@@ -37,10 +46,12 @@ const msg = new SIWWeb3({
     uri: "https://example.com",
     version: "1",
     chainId: 1,
+    nonce: "32891757",
+    issuedAt: new Date().toISOString(),
   },
 });
 
-// Generate the message to sign
+// Generate the EIP-4361 message to sign
 const messageToSign = msg.prepareMessage();
 
 // Verify a signature
@@ -62,7 +73,7 @@ const solMsg = new SIWS(messageString);
 import { SIWWeb3 } from "@web3auth/sign-in-with-web3";
 
 SIWWeb3.registerStrategy({
-  network: "mychain",
+  chain: "mychain",
   parse: (msg) => new MyChainSIW(msg),
   create: (params) => new MyChainSIW(params),
 });
@@ -79,7 +90,6 @@ src/
     solana.ts        — SIWS + ed25519 verifier
   regex.ts           — Shared message parsing
   types.ts           — Shared types
-  utils.ts           — Shared utilities
 ```
 
 ## Exports
@@ -101,9 +111,15 @@ These packages have been deprecated and consolidated into this package.
 ```diff
 - import { SIWEthereum } from "@web3auth/sign-in-with-ethereum";
 - import { SIWS } from "@web3auth/sign-in-with-solana";
-+ import { SIWE, SIWS } from "@web3auth/sign-in-with-web3";
++ import { SIWWeb3, ethereumStrategy, solanaStrategy, SIWE, SIWS } from "@web3auth/sign-in-with-web3";
++ SIWWeb3.registerStrategy(ethereumStrategy);
++ SIWWeb3.registerStrategy(solanaStrategy);
 ```
 
-Note: `SIWEthereum` has been renamed to `SIWE`.
+Key changes from previous versions:
+- `SIWEthereum` has been renamed to `SIWE`
+- `network` property has been renamed to `chain`
+- `chain` is now required when constructing from an object
+- Strategies must be registered manually (no longer auto-registered)
 
 [Docs](https://siww.web3auth.io)

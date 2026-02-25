@@ -142,7 +142,7 @@ export interface VerifyParams extends VerifyOptions {
   signature: Signature;
 }
 
-export interface SignInWithWeb3Response {
+export interface SignInWithWeb3Response<T = unknown> {
   /** Boolean representing if the message was verified with success. */
   success: boolean;
 
@@ -150,6 +150,5 @@ export interface SignInWithWeb3Response {
   error?: SignInWithWeb3Error;
 
   /** Original message that was verified. */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any;
+  data: T;
 }

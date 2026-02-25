@@ -78,7 +78,7 @@ export class SIWWeb3 {
     return this.instance.prepareMessage();
   }
 
-  async verify(payload: Payload, signature: Signature, options?: VerifyOptions): Promise<SignInWithWeb3Response> {
+  async verify(payload: Payload, signature: Signature, options?: VerifyOptions): Promise<SignInWithWeb3Response<SIWBase>> {
     const verifyParams: VerifyParams = { payload, signature, ...options };
     return this.instance.verify(verifyParams);
   }
