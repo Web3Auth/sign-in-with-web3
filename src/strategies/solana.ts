@@ -1,4 +1,4 @@
-import { bs58 as base58 } from "@toruslabs/bs58";
+import base58 from "bs58";
 import { sign } from "@toruslabs/tweetnacl-js";
 
 import { ParsedMessageFields, parseMessage } from "../regex";

@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/web3auth/sign-in-with-web3#readme",
   "dependencies": {
-    "@toruslabs/bs58": "^1.0.0",
+    "bs58": "^6.0.0",
     "@toruslabs/tweetnacl-js": "^1.0.4",
     "valid-url": "^1.0.9",
     "viem": "^2.46.3"

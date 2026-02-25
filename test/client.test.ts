@@ -1,4 +1,4 @@
-import { bs58 as base58 } from "@toruslabs/bs58";
+import base58 from "bs58";
 import { randomBytes, sign } from "@toruslabs/tweetnacl-js";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { describe, expect, it } from "vitest";
