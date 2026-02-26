@@ -127,6 +127,31 @@ describe(`Round Trip Ethereum`, () => {
   });
 });
 
+describe(`Malformed Solana input`, () => {
+  it(`Returns verification failure for malformed signature`, async () => {
+    const firstSolana = Object.values(parsingPositiveSolana)[0];
+    const { payload, chain, header } = firstSolana.fields;
+    const msg = new SIWWeb3({ payload, chain, header });
+    const signature = new Signature();
+    signature.s = "!!!invalid-base58!!!";
+    signature.t = "sip99";
+    const result = await msg.verify(payload, signature);
+    expect(result.success).toBe(false);
+  });
+
+  it(`Returns verification failure for malformed address`, async () => {
+    const firstSolana = Object.values(parsingPositiveSolana)[0];
+    const { payload, chain, header } = firstSolana.fields;
+    payload.address = "!!!invalid-base58!!!";
+    const msg = new SIWWeb3({ payload, chain, header });
+    const signature = new Signature();
+    signature.s = "11111111111111111111111111111111";
+    signature.t = "sip99";
+    const result = await msg.verify(payload, signature);
+    expect(result.success).toBe(false);
+  });
+});
+
 describe(`Round Trip Solana`, () => {
   const privateKey = crypto.getRandomValues(new Uint8Array(32));
   const publicKey = ed25519.getPublicKey(privateKey);

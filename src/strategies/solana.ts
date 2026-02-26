@@ -15,9 +15,13 @@ export class SIWS extends SIWBase {
   }
 
   protected async verifySignature(_message: string, payload: Payload, signature: Signature, _params?: VerifyParams): Promise<boolean> {
-    const message = this.prepareMessage();
-    const encodedMessage = new TextEncoder().encode(message);
-    return ed25519.verify(base58.decode(signature.s), encodedMessage, base58.decode(payload.address));
+    try {
+      const message = this.prepareMessage();
+      const encodedMessage = new TextEncoder().encode(message);
+      return ed25519.verify(base58.decode(signature.s), encodedMessage, base58.decode(payload.address));
+    } catch {
+      return false;
+    }
   }
 }
 
