@@ -111,19 +111,19 @@ export abstract class SIWBase {
 
     if (this.payload.issuedAt) {
       if (!ISO8601.test(this.payload.issuedAt)) {
-        throw new Error(ErrorTypes.INVALID_TIME_FORMAT);
+        throw new SignInWithWeb3Error(ErrorTypes.INVALID_TIME_FORMAT);
       }
     }
 
     if (this.payload.expirationTime) {
       if (!ISO8601.test(this.payload.expirationTime)) {
-        throw new Error(ErrorTypes.INVALID_TIME_FORMAT);
+        throw new SignInWithWeb3Error(ErrorTypes.INVALID_TIME_FORMAT);
       }
     }
 
     if (this.payload.notBefore) {
       if (!ISO8601.test(this.payload.notBefore)) {
-        throw new Error(ErrorTypes.INVALID_TIME_FORMAT);
+        throw new SignInWithWeb3Error(ErrorTypes.INVALID_TIME_FORMAT);
       }
     }
   }
