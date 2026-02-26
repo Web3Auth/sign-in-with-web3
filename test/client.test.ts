@@ -90,6 +90,26 @@ describe(`Message Validation`, () => {
   });
 });
 
+describe(`Invalid message parsing`, () => {
+  it(`Throws on message with no chain`, () => {
+    expect(() => new SIWWeb3("totally invalid message")).toThrow("Message did not match the regular expression.");
+  });
+
+  it(`Throws on empty string`, () => {
+    expect(() => new SIWWeb3("")).toThrow("Message did not match the regular expression.");
+  });
+
+  it(`Throws on message with empty chain name`, () => {
+    expect(() => new SIWWeb3("sign in with your  account:")).toThrow("Message did not match the regular expression.");
+  });
+
+  it(`Throws on message with unregistered chain`, () => {
+    expect(() => new SIWWeb3("example.com wants you to sign in with your Bitcoin account:\n0x1234")).toThrow(
+      "No strategy registered for chain: Bitcoin."
+    );
+  });
+});
+
 describe(`Round Trip Ethereum`, () => {
   const account = privateKeyToAccount(generatePrivateKey());
 

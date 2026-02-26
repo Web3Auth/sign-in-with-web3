@@ -11,7 +11,7 @@ const NOT_BEFORE = `(\\nNot Before: (?<notBefore>${DATETIME}))?`;
 const REQUEST_ID = "(\\nRequest ID: (?<requestId>[-._~!$&'()*+,;=:@%a-zA-Z0-9]*))?";
 const RESOURCES = `(\\nResources:(?<resources>(\\n- ${URI}?)+))?`;
 
-const CHAIN_DETECT = "sign in with your (?<chain>([^*]*)) account:";
+const CHAIN_DETECT = "sign in with your (?<chain>([^*]+)) account:";
 
 export function getChainFromMessage(msg: string) {
   const REGEX = new RegExp(CHAIN_DETECT, "g");
