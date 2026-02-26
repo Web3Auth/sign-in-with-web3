@@ -5,7 +5,9 @@ import {
 import {
     WalletDisconnectButton, WalletModalProvider, WalletMultiButton
 } from '@solana/wallet-adapter-react-ui';
-import { Payload as SIWPayload, SIWWeb3 } from '@web3auth/sign-in-with-web3';
+import { Payload as SIWPayload, SIWWeb3, solanaStrategy } from '@web3auth/sign-in-with-web3';
+
+SIWWeb3.registerStrategy(solanaStrategy);
 import bs58 from 'bs58';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
@@ -50,8 +52,8 @@ const MyWallet: React.FC = () => {
         payload.chainId = 1;
     
         const header = { t : "sip99" };
-        const network = "solana";
-        let message = new SIWWeb3({ header, payload, network });
+        const chain = "solana";
+        let message = new SIWWeb3({ header, payload, chain });
 
         // we need the nonce for verification so getting it in a global variable
         setNonce(message.payload.nonce);
@@ -68,7 +70,7 @@ const MyWallet: React.FC = () => {
                 sign == "" &&
                 <span>
                     <p className='center'>Sign Transaction</p>
-                    <input className='publicKey' type="text" id="publicKey" value={walletAddress} />
+                    <input className='publicKey' type="text" id="publicKey" value={walletAddress} readOnly />
                 </span>
             }
             {
