@@ -103,6 +103,19 @@ describe(`Invalid message parsing`, () => {
     expect(() => new SIWWeb3("sign in with your  account:")).toThrow("Message did not match the regular expression.");
   });
 
+  it(`Throws on message with missing chain ID`, () => {
+    const msgWithoutChainId = [
+      "example.com wants you to sign in with your Ethereum account:",
+      "0x1234567890abcdef1234567890abcdef12345678",
+      "",
+      "URI: https://example.com",
+      "Version: 1",
+      "Nonce: abcdefgh",
+      "Issued At: 2024-01-01T00:00:00Z",
+    ].join("\n");
+    expect(() => new SIWWeb3(msgWithoutChainId)).toThrow("Message did not match the regular expression.");
+  });
+
   it(`Throws on message with unregistered chain`, () => {
     expect(() => new SIWWeb3("example.com wants you to sign in with your Bitcoin account:\n0x1234")).toThrow(
       "No strategy registered for chain: Bitcoin."

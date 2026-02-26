@@ -39,7 +39,6 @@ export class SIWWeb3 {
     const chain = param.chain;
     const strategy = SIWWeb3.getStrategy(chain);
     this.instance = strategy.create({ header: param.header, payload: param.payload, signature: param.signature });
-    Object.assign(this, param);
     this.chain = chain.toLowerCase();
     this.payload = this.instance.payload;
     this.header = this.instance.header || param.header;
