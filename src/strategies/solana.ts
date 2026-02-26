@@ -14,9 +14,8 @@ export class SIWS extends SIWBase {
     return parseMessage("Solana", SOLANA_ADDRESS_PATTERN, msg);
   }
 
-  protected async verifySignature(_message: string, payload: Payload, signature: Signature, _params?: VerifyParams): Promise<boolean> {
+  protected async verifySignature(message: string, payload: Payload, signature: Signature, _params?: VerifyParams): Promise<boolean> {
     try {
-      const message = this.prepareMessage();
       const encodedMessage = new TextEncoder().encode(message);
       return ed25519.verify(base58.decode(signature.s), encodedMessage, base58.decode(payload.address));
     } catch {

@@ -53,9 +53,6 @@ export abstract class SIWBase {
     const chainField = `Chain ID: ${this.payload.chainId || "1"}`;
     const nonceField = `Nonce: ${this.payload.nonce}`;
     const suffixArray = [uriField, versionField, chainField, nonceField];
-    if (this.payload.issuedAt) {
-      Date.parse(this.payload.issuedAt);
-    }
     this.payload.issuedAt = this.payload.issuedAt ? this.payload.issuedAt : new Date().toISOString();
     suffixArray.push(`Issued At: ${this.payload.issuedAt}`);
 
