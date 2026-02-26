@@ -2,7 +2,7 @@ import { getChainFromMessage } from "./regex";
 import { SIWBase } from "./strategies/base";
 import { Header, Payload, Signature, SignInWithWeb3Response, VerifyOptions, VerifyParams } from "./types";
 
-interface Strategy {
+export interface Strategy {
   chain: string;
   parse: (msg: string) => SIWBase;
   create: (params: Partial<SIWBase>) => SIWBase;

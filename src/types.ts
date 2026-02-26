@@ -71,7 +71,7 @@ export enum ErrorTypes {
   INVALID_DOMAIN = "Invalid domain.",
 
   /** `domain` don't match the domain provided for verification. */
-  DOMAIN_MISMATCH = "Domain do not match provided domain for verification.",
+  DOMAIN_MISMATCH = "Domain does not match provided domain for verification.",
 
   /** `nonce` don't match the nonce provided for verification. */
   NONCE_MISMATCH = "Nonce do not match provided nonce for verification.",
