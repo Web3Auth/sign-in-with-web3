@@ -4,6 +4,7 @@ import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
 import { describe, expect, it } from "vitest";
 
 import { ErrorTypes, ethereumStrategy, Signature, SIWWeb3, solanaStrategy } from "../src/index";
+import { parseMessage } from "../src/regex";
 import parsingPositiveEthereum from "./parsing_positive_ethereum.json";
 import parsingPositiveSolana from "./parsing_positive_solana.json";
 import validationNegativeEthereum from "./validation_negative_ethereum.json";
@@ -120,6 +121,26 @@ describe(`Invalid message parsing`, () => {
     expect(() => new SIWWeb3("example.com wants you to sign in with your Bitcoin account:\n0x1234")).toThrow(
       "No strategy registered for chain: Bitcoin."
     );
+  });
+});
+
+describe(`Resource parsing`, () => {
+  it(`Returns null for message without resources`, () => {
+    const msg = [
+      "service.org wants you to sign in with your Ethereum account:",
+      "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "",
+      "I accept the ServiceOrg Terms of Service: https://service.org/tos",
+      "",
+      "URI: https://service.org/login",
+      "Version: 1",
+      "Chain ID: 1",
+      "Nonce: 32891757",
+      "Issued At: 2021-09-30T16:25:24.000Z",
+    ].join("\n");
+    const parsed = parseMessage("Ethereum", "0x[a-zA-Z0-9]{40}", msg);
+    // Type declares `resources: string[] | null` but returns undefined
+    expect(parsed.resources).toBeNull();
   });
 });
 

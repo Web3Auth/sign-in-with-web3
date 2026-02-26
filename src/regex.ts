@@ -62,6 +62,6 @@ export function parseMessage(chainName: string, addressPattern: string, msg: str
     expirationTime: match?.groups?.expirationTime,
     notBefore: match?.groups?.notBefore,
     requestId: match?.groups?.requestId,
-    resources: match?.groups?.resources?.split("\n- ").slice(1),
+    resources: match?.groups?.resources?.split("\n- ")?.slice(1) ?? null,
   };
 }
