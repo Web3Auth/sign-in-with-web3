@@ -5,7 +5,7 @@
       "header": {
         "t": "sip99"
       },
-      "network": "solana",
+      "chain": "solana",
       "payload": {
         "domain": "service.org",
         "address": "43h6BNKzvoV43qBLje5dxn7vhcChZjVEAn8PQLZvMiqj",
@@ -25,7 +25,7 @@
       "header": {
         "t": "sip99"
       },
-      "network": "solana",
+      "chain": "solana",
       "payload": {
         "domain": "service.org",
         "address": "43h6BNKzvoV43qBLje5dxn7vhcChZjVEAn8PQLZvMiqj",
@@ -44,7 +44,7 @@
       "header": {
         "t": "sip99"
       },
-      "network": "solana",
+      "chain": "solana",
       "payload": {
         "domain": "service.org",
         "address": "43h6BNKzvoV43qBLje5dxn7vhcChZjVEAn8PQLZvMiqj",
@@ -63,7 +63,7 @@
       "header": {
         "t": "sip99"
       },
-      "network": "solana",
+      "chain": "solana",
       "payload": {
         "domain": "127.0.0.1",
         "address": "43h6BNKzvoV43qBLje5dxn7vhcChZjVEAn8PQLZvMiqj",
@@ -82,7 +82,7 @@
       "header": {
         "t": "sip99"
       },
-      "network": "solana",
+      "chain": "solana",
       "payload": {
         "domain": "test@127.0.0.1",
         "address": "43h6BNKzvoV43qBLje5dxn7vhcChZjVEAn8PQLZvMiqj",
@@ -101,7 +101,7 @@
       "header": {
         "t": "sip99"
       },
-      "network": "solana",
+      "chain": "solana",
       "payload": {
         "domain": "127.0.0.1:8080",
         "address": "43h6BNKzvoV43qBLje5dxn7vhcChZjVEAn8PQLZvMiqj",
@@ -120,7 +120,7 @@
       "header": {
         "t": "sip99"
       },
-      "network": "solana",
+      "chain": "solana",
       "payload": {
         "domain": "test@127.0.0.1:8080",
         "address": "43h6BNKzvoV43qBLje5dxn7vhcChZjVEAn8PQLZvMiqj",
@@ -139,7 +139,7 @@
       "header": {
         "t": "sip99"
       },
-      "network": "solana",
+      "chain": "solana",
       "payload": {
         "domain": "service.org",
         "address": "43h6BNKzvoV43qBLje5dxn7vhcChZjVEAn8PQLZvMiqj",

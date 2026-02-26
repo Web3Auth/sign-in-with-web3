@@ -18,7 +18,7 @@
       "s": "3XnLTn7ro1BGdRBNakwdMMmXrE3o4g8sBVQZpboD3T4AbnrzMgwM1AypJTPrp1qt2DBDxt3vDfdzwzupNkHPdVbj",
       "t": "sip99"
     },
-    "network": "solana"
+    "chain": "solana"
   },
   "without expiration solana": {
     "header": {
@@ -38,6 +38,6 @@
       "s": "22ACJ9Y3ypH8vo3zV5vy7dp9S3oZWAXzbxsohHL9bw24M6XjKo1Ti5ZkgKmP2R3Jq5Wks4R1Eq41dB6SXF8NMC6G",
       "t": "sip99"
     },
-    "network": "solana"
+    "chain": "solana"
   }
 }

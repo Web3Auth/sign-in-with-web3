@@ -1,8 +1,10 @@
-import { Payload as SIWPayload, SIWWeb3 } from '@web3auth/sign-in-with-web3';
+import { ethereumStrategy, Payload as SIWPayload, SIWWeb3 } from '@web3auth/sign-in-with-web3';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import Web3 from 'web3';
 import EthereumLogo from '../public/ethereum-logo.png';
+
+SIWWeb3.registerStrategy(ethereumStrategy);
 
 declare global {
   interface Window {
@@ -79,8 +81,8 @@ const MyWallet: React.FC = () => {
         const header = {
           t : "eip191"
         };
-        const network = "ethereum"
-        let message = new SIWWeb3({ header, payload ,network});
+        const chain = "ethereum"
+        let message = new SIWWeb3({ header, payload, chain });
         // we need the nonce for verification so getting it in a global variable
         setNonce(message.payload.nonce);
         setSiwsMessage(message);

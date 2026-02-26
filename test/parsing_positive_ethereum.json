@@ -16,7 +16,7 @@
         "issuedAt": "2021-09-30T16:25:24.000Z",
         "resources": ["ipfs://Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu", "https://example.com/my-web2-claim.json"]
       },
-      "network": "ethereum"
+      "chain": "ethereum"
     }
   },
   "no optional field ethereum ": {
@@ -35,7 +35,7 @@
         "nonce": "32891757",
         "issuedAt": "2021-09-30T16:25:24.000Z"
       },
-      "network": "ethereum"
+      "chain": "ethereum"
     }
   },
   "timestamp without microseconds ethereum ": {
@@ -54,7 +54,7 @@
         "nonce": "32891757",
         "issuedAt": "2021-09-30T16:25:24Z"
       },
-      "network": "ethereum"
+      "chain": "ethereum"
     }
   },
   "domain is RFC 3986 authority with IP ethereum ": {
@@ -73,7 +73,7 @@
         "nonce": "32891757",
         "issuedAt": "2021-09-30T16:25:24.000Z"
       },
-      "network": "ethereum"
+      "chain": "ethereum"
     }
   },
   "domain is RFC 3986 authority with userinfo ethereum ": {
@@ -92,7 +92,7 @@
         "nonce": "32891757",
         "issuedAt": "2021-09-30T16:25:24.000Z"
       },
-      "network": "ethereum"
+      "chain": "ethereum"
     }
   },
   "domain is RFC 3986 authority with port ethereum ": {
@@ -111,7 +111,7 @@
         "nonce": "32891757",
         "issuedAt": "2021-09-30T16:25:24.000Z"
       },
-      "network": "ethereum"
+      "chain": "ethereum"
     }
   },
   "domain is RFC 3986 authority with userinfo and port ethereum ": {
@@ -130,7 +130,7 @@
         "nonce": "32891757",
         "issuedAt": "2021-09-30T16:25:24.000Z"
       },
-      "network": "ethereum"
+      "chain": "ethereum"
     }
   },
   "no statement ethereum ": {
@@ -148,7 +148,7 @@
         "nonce": "32891757",
         "issuedAt": "2021-09-30T16:25:24.000Z"
       },
-      "network": "ethereum"
+      "chain": "ethereum"
     }
   }
 }

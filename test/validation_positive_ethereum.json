@@ -17,7 +17,7 @@
       "s": "0xc0da894b04198482a58a5d043aa9704cdcc414371494093228a9241b0e62514c4860eb08352c37d32c13dd44a2e9d64a0652180e51fcd21b636360f5b16c64001c",
       "t": "eip191"
     },
-    "network": "ethereum"
+    "chain": "ethereum"
   },
   "example message ethereum": {
     "header": {
@@ -25,19 +25,19 @@
     },
     "payload": {
       "domain": "localhost:1234",
-      "address": "0x024700add75eAc72293AcCA04a9DF8e9eD22b7d4",
+      "address": "0x54cC46eDDB5640Da6b660D1Ae3c0E0aD7111eBf4",
       "statement": "Sign in with Ethereum to the app.",
       "uri": "http://localhost:1234",
       "version": "1",
       "nonce": "lBMT45RFWx8gJ0CZT",
       "issuedAt": "2022-06-01T02:12:35.418Z",
-      "expirationTime": "2025-08-01T02:09:27.405Z",
+      "expirationTime": "2030-08-01T02:09:27.405Z",
       "chainId": 1
     },
     "signature": {
-      "s": "0xa051cba5f9d2d81b6bde12a965c670dbf8338d043a2f5025443b8c00a06ab7273f9efa9b7a8581f53a6b3e97354d9649190d8af203eca1d37d330444620ef74b1c",
+      "s": "0xdb770c779e6299de22d13434e89fb76ab52213f8a491c9a3ff030efa2e2de1a5290638cc9dbbdee703f4cf25d5afe96b1f779aae684fd40579380b92e4e66e9e1c",
       "t": "eip191"
     },
-    "network": "ethereum"
+    "chain": "ethereum"
   }
 }

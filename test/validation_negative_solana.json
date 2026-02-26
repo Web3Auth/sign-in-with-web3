@@ -18,7 +18,7 @@
       "t": "sip99",
       "s": "4nxtXtFgkMXe8Nj9ANPXim8zjXyUm5tXLcaj9EmbiT3yrwkg73FQsZMaU8vN6utvMXWPXCGCtHX9kLfmYL6zcMbU"
     },
-    "network": "solana"
+    "chain": "solana"
   },
   "malformed signature solana": {
     "header": {
@@ -39,7 +39,7 @@
       "t": "sip99",
       "s": "56Hfu7LqK79sh6xVXic4M3vUAGfKMWL3vEN5Z3kMkzn8RvLvoHCVbXD3Eg4bnFJj846JDzimK9aFwrWJ9Sy6buQ"
     },
-    "network": "solana"
+    "chain": "solana"
   },
   "wrong signature solana": {
     "header": {
@@ -60,7 +60,7 @@
       "t": "sip99",
       "s": "4nxtXtFgkMXe8Nj9ANPXim8zjXyUm5tXLcaj9EmbiT3yrwkg73FQsZMaU8vN6utvMXWPXCGCtHX9kLfmYL6zcMbU"
     },
-    "network": "solana"
+    "chain": "solana"
   },
   "invalid expiration time solana": {
     "header": {
@@ -81,6 +81,6 @@
       "t": "sip99",
       "s": "5GdGGKsMZD8JciUEVEVLfxTZjbuixvSQirP9p7EdmoSbfnSapTCGiTEQ2ysiSDvnBDiWEaZjsFVdax5BJsQi1ZxY"
     },
-    "network": "solana"
+    "chain": "solana"
   }
 }
