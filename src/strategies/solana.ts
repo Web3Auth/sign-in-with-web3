@@ -1,5 +1,5 @@
 import { ed25519 } from "@noble/curves/ed25519.js";
-import base58 from "bs58";
+import { base58 } from "@scure/base";
 
 import { ParsedMessageFields, parseMessage } from "../regex";
 import { Payload, Signature, VerifyParams } from "../types";
