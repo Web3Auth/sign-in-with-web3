@@ -28,12 +28,12 @@
     "nuke": "shx rm -rf node_modules package.lock"
   },
   "dependencies": {
-    "@babel/runtime": "^7.18.3",
+    "@babel/runtime": "^7.26.10",
     "@web3auth/sign-in-with-web3": "file:../../",
     "query-string": "^7.1.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "sweetalert2": "^11.4.12",
+    "sweetalert2": "^11.22.4",
     "url": "^0.11.0",
     "web3": "^1.7.3"
   },
