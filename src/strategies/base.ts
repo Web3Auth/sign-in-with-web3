@@ -232,14 +232,23 @@ export abstract class SIWBase {
           ),
         };
       }
-      if (checkTime.getTime() - issuedAtMs > issuedAtMaxAgeMs) {
+      // Age starts when the message becomes usable. If notBefore is later than
+      // issuedAt, measure from notBefore so scheduled sign-in is not bricked.
+      let ageStartMs = issuedAtMs;
+      if (this.payload.notBefore) {
+        const notBeforeMs = new Date(this.payload.notBefore).getTime();
+        if (!Number.isNaN(notBeforeMs) && notBeforeMs > ageStartMs) {
+          ageStartMs = notBeforeMs;
+        }
+      }
+      if (checkTime.getTime() - ageStartMs > issuedAtMaxAgeMs) {
         return {
           success: false,
           data: this,
           error: new SignInWithWeb3Error(
             ErrorTypes.ISSUED_AT_EXPIRED,
             `age <= ${issuedAtMaxAgeMs}ms`,
-            `${checkTime.getTime() - issuedAtMs}ms`
+            `${checkTime.getTime() - ageStartMs}ms`
           ),
         };
       }

@@ -249,4 +249,27 @@ describe(`issuedAt max-age`, () => {
     const result = await msg.verify(payload, signature);
     expect(result.success).toBe(true);
   });
+
+  it(`measures issuedAt max-age from notBefore when scheduled after issuedAt`, async () => {
+    const account = privateKeyToAccount(generatePrivateKey());
+    const issuedAt = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const notBefore = new Date(Date.now() - 30 * 1000).toISOString();
+    const payload = {
+      domain: "example.com",
+      address: account.address,
+      uri: "https://example.com",
+      version: "1",
+      chainId: 1,
+      nonce: "abcdefgh",
+      issuedAt,
+      notBefore,
+      expirationTime: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+    };
+    const msg = new SIWWeb3({ payload, chain: "Ethereum" });
+    const signature = new Signature();
+    signature.s = await account.signMessage({ message: msg.toMessage() });
+    signature.t = "eip191";
+    const result = await msg.verify(payload, signature);
+    expect(result.success).toBe(true);
+  });
 });
