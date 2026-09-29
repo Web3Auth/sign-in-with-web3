@@ -52,7 +52,8 @@ describe(`Message Validation`, () => {
     it(`Validates message successfully - ethereum : ${test}`, async () => {
       const { payload, signature, chain, header } = value;
       const msg = new SIWWeb3({ payload, chain, header });
-      const verify = await msg.verify(payload, signature);
+      // Historical vectors use old issuedAt; disable max-age for signature checks.
+      const verify = await msg.verify(payload, signature, { issuedAtMaxAgeMs: 0 });
       expect(verify.success).toBe(true);
     });
   });
@@ -61,7 +62,7 @@ describe(`Message Validation`, () => {
     it(`Validates message successfully - solana: ${test}`, async () => {
       const { payload, signature, chain, header } = value;
       const msg = new SIWWeb3({ payload, chain, header });
-      const verify = await msg.verify(payload, signature);
+      const verify = await msg.verify(payload, signature, { issuedAtMaxAgeMs: 0 });
       expect(verify.success).toBe(true);
     });
   });
@@ -71,7 +72,7 @@ describe(`Message Validation`, () => {
       const result = await (async () => {
         const { payload, signature, chain, header } = value;
         const msg = new SIWWeb3({ payload, chain, header });
-        return msg.verify(payload, signature);
+        return msg.verify(payload, signature, { issuedAtMaxAgeMs: 0 });
       })().catch((e: Error) => e);
       const errorType = result instanceof Error ? result.message : result.error.type;
       expect(Object.values(ErrorTypes) as string[]).toContain(errorType);
@@ -83,7 +84,7 @@ describe(`Message Validation`, () => {
       const result = await (async () => {
         const { payload, signature, chain, header } = value;
         const msg = new SIWWeb3({ payload, chain, header });
-        return msg.verify(payload, signature);
+        return msg.verify(payload, signature, { issuedAtMaxAgeMs: 0 });
       })().catch((e: Error) => e);
       const errorType = result instanceof Error ? result.message : result.error.type;
       expect(Object.values(ErrorTypes) as string[]).toContain(errorType);
@@ -151,6 +152,7 @@ describe(`Round Trip Ethereum`, () => {
     it(`Generates a Successfully Verifying message: ${test}`, async () => {
       const { payload, chain, header } = el.fields;
       payload.address = account.address;
+      payload.issuedAt = new Date().toISOString();
       const msg = new SIWWeb3({ payload, chain, header });
       const signature = new Signature();
       signature.s = await account.signMessage({ message: msg.toMessage() });
@@ -169,7 +171,7 @@ describe(`Malformed Solana input`, () => {
     const signature = new Signature();
     signature.s = "!!!invalid-base58!!!";
     signature.t = "sip99";
-    const result = await msg.verify(payload, signature);
+    const result = await msg.verify(payload, signature, { issuedAtMaxAgeMs: 0 });
     expect(result.success).toBe(false);
   });
 
@@ -181,7 +183,7 @@ describe(`Malformed Solana input`, () => {
     const signature = new Signature();
     signature.s = "11111111111111111111111111111111";
     signature.t = "sip99";
-    const result = await msg.verify(payload, signature);
+    const result = await msg.verify(payload, signature, { issuedAtMaxAgeMs: 0 });
     expect(result.success).toBe(false);
   });
 });
@@ -193,6 +195,7 @@ describe(`Round Trip Solana`, () => {
     it(`Generates a Successfully Verifying message: ${test}`, async () => {
       const { payload, chain, header } = value.fields;
       payload.address = base58.encode(publicKey);
+      payload.issuedAt = new Date().toISOString();
       const msg = new SIWWeb3({ payload, chain, header });
       const encodedMessage = new TextEncoder().encode(msg.prepareMessage());
       const signatureEncoded = base58.encode(ed25519.sign(encodedMessage, privateKey));
@@ -202,5 +205,71 @@ describe(`Round Trip Solana`, () => {
       const { success } = await msg.verify(payload, signature);
       expect(success).toBe(true);
     });
+  });
+});
+
+describe(`issuedAt max-age`, () => {
+  it(`rejects stale issuedAt even with far-future expirationTime`, async () => {
+    const account = privateKeyToAccount(generatePrivateKey());
+    const payload = {
+      domain: "example.com",
+      address: account.address,
+      uri: "https://example.com",
+      version: "1",
+      chainId: 1,
+      nonce: "abcdefgh",
+      issuedAt: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
+      expirationTime: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+    };
+    const msg = new SIWWeb3({ payload, chain: "Ethereum" });
+    const signature = new Signature();
+    signature.s = await account.signMessage({ message: msg.toMessage() });
+    signature.t = "eip191";
+    const result = await msg.verify(payload, signature);
+    expect(result.success).toBe(false);
+    expect(result.error?.type).toBe(ErrorTypes.ISSUED_AT_EXPIRED);
+  });
+
+  it(`accepts fresh issuedAt with far-future expirationTime`, async () => {
+    const account = privateKeyToAccount(generatePrivateKey());
+    const payload = {
+      domain: "example.com",
+      address: account.address,
+      uri: "https://example.com",
+      version: "1",
+      chainId: 1,
+      nonce: "abcdefgh",
+      issuedAt: new Date().toISOString(),
+      expirationTime: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+    };
+    const msg = new SIWWeb3({ payload, chain: "Ethereum" });
+    const signature = new Signature();
+    signature.s = await account.signMessage({ message: msg.toMessage() });
+    signature.t = "eip191";
+    const result = await msg.verify(payload, signature);
+    expect(result.success).toBe(true);
+  });
+
+  it(`measures issuedAt max-age from notBefore when scheduled after issuedAt`, async () => {
+    const account = privateKeyToAccount(generatePrivateKey());
+    const issuedAt = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const notBefore = new Date(Date.now() - 30 * 1000).toISOString();
+    const payload = {
+      domain: "example.com",
+      address: account.address,
+      uri: "https://example.com",
+      version: "1",
+      chainId: 1,
+      nonce: "abcdefgh",
+      issuedAt,
+      notBefore,
+      expirationTime: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+    };
+    const msg = new SIWWeb3({ payload, chain: "Ethereum" });
+    const signature = new Signature();
+    signature.s = await account.signMessage({ message: msg.toMessage() });
+    signature.t = "eip191";
+    const result = await msg.verify(payload, signature);
+    expect(result.success).toBe(true);
   });
 });

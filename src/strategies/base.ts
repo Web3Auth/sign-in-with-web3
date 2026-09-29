@@ -200,6 +200,60 @@ export abstract class SIWBase {
       }
     }
 
+    // Always enforce issuedAt freshness (default 5m). Previously only expirationTime /
+    // notBefore were checked, so a stale issuedAt with a far-future expirationTime
+    // (or no expirationTime) remained valid indefinitely.
+    const issuedAtMaxAgeMs = params.issuedAtMaxAgeMs ?? 5 * 60 * 1000;
+    if (issuedAtMaxAgeMs > 0) {
+      if (!this.payload.issuedAt) {
+        return {
+          success: false,
+          data: this,
+          error: new SignInWithWeb3Error(ErrorTypes.INVALID_TIME_FORMAT, "issuedAt present", "issuedAt missing"),
+        };
+      }
+      const issuedAtDate = new Date(this.payload.issuedAt);
+      const issuedAtMs = issuedAtDate.getTime();
+      if (Number.isNaN(issuedAtMs)) {
+        return {
+          success: false,
+          data: this,
+          error: new SignInWithWeb3Error(ErrorTypes.INVALID_TIME_FORMAT, "valid issuedAt", this.payload.issuedAt),
+        };
+      }
+      if (issuedAtMs > checkTime.getTime() + 30_000) {
+        return {
+          success: false,
+          data: this,
+          error: new SignInWithWeb3Error(
+            ErrorTypes.ISSUED_AT_IN_FUTURE,
+            `issuedAt <= ${new Date(checkTime.getTime() + 30_000).toISOString()}`,
+            this.payload.issuedAt
+          ),
+        };
+      }
+      // Age starts when the message becomes usable. If notBefore is later than
+      // issuedAt, measure from notBefore so scheduled sign-in is not bricked.
+      let ageStartMs = issuedAtMs;
+      if (this.payload.notBefore) {
+        const notBeforeMs = new Date(this.payload.notBefore).getTime();
+        if (!Number.isNaN(notBeforeMs) && notBeforeMs > ageStartMs) {
+          ageStartMs = notBeforeMs;
+        }
+      }
+      if (checkTime.getTime() - ageStartMs > issuedAtMaxAgeMs) {
+        return {
+          success: false,
+          data: this,
+          error: new SignInWithWeb3Error(
+            ErrorTypes.ISSUED_AT_EXPIRED,
+            `age <= ${issuedAtMaxAgeMs}ms`,
+            `${checkTime.getTime() - ageStartMs}ms`
+          ),
+        };
+      }
+    }
+
     const message = this.prepareMessage();
 
     const isValid = await this.verifySignature(message, this.payload, signature, params);

@@ -67,6 +67,12 @@ export enum ErrorTypes {
   /** `expirationTime` is present and in the past. */
   EXPIRED_MESSAGE = "Expired message.",
 
+  /** `issuedAt` is older than the configured max age. */
+  ISSUED_AT_EXPIRED = "Issued At is too old.",
+
+  /** `issuedAt` is too far in the future. */
+  ISSUED_AT_IN_FUTURE = "Issued At is in the future.",
+
   /** `domain` is not a valid authority or is empty. */
   INVALID_DOMAIN = "Invalid domain.",
 
@@ -132,6 +138,11 @@ export class SignInWithWeb3Error extends Error {
 
 export interface VerifyOptions {
   rpcTarget?: string;
+  /**
+   * Maximum age of `issuedAt` relative to verification time, in milliseconds.
+   * Defaults to 5 minutes. Set to `0` to disable (e.g. historical test vectors).
+   */
+  issuedAtMaxAgeMs?: number;
 }
 
 export interface VerifyParams extends VerifyOptions {
