@@ -245,11 +245,7 @@ export abstract class SIWBase {
         return {
           success: false,
           data: this,
-          error: new SignInWithWeb3Error(
-            ErrorTypes.ISSUED_AT_EXPIRED,
-            `age <= ${issuedAtMaxAgeMs}ms`,
-            `${checkTime.getTime() - ageStartMs}ms`
-          ),
+          error: new SignInWithWeb3Error(ErrorTypes.ISSUED_AT_EXPIRED, `age <= ${issuedAtMaxAgeMs}ms`, `${checkTime.getTime() - ageStartMs}ms`),
         };
       }
     }

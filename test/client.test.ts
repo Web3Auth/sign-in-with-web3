@@ -47,6 +47,47 @@ describe(`Message Generation from message`, () => {
   });
 });
 
+describe(`Phantom-compatible Solana chain IDs`, () => {
+  it(`preserves legacy numeric chain IDs as numbers`, () => {
+    const message = [
+      "example.com wants you to sign in with your Solana account:",
+      "4Cw1koUQtqybLFem7uqhzMBznMPGARbFS4cjaYbM9RnR",
+      "",
+      "Sign in with your Solana account.",
+      "",
+      "URI: https://example.com/",
+      "Version: 1",
+      "Chain ID: 101",
+      "Nonce: a1b2c3d4e5f6g7h8",
+      "Issued At: 2026-09-29T06:00:00.000Z",
+    ].join("\n");
+
+    const parsed = new SIWWeb3(message);
+
+    expect(parsed.payload.chainId).toBe(101);
+  });
+
+  it(`parses a solana:devnet chain ID`, () => {
+    const message = [
+      "ew-demo.metamask.io wants you to sign in with your Solana account:",
+      "4Cw1koUQtqybLFem7uqhzMBznMPGARbFS4cjaYbM9RnR",
+      "",
+      "Sign in with your Solana account.",
+      "",
+      "URI: https://ew-demo.metamask.io/",
+      "Version: 1",
+      "Chain ID: solana:devnet",
+      "Nonce: a1b2c3d4e5f6g7h8",
+      "Issued At: 2026-09-29T06:00:00.000Z",
+    ].join("\n");
+
+    const parsed = new SIWWeb3(message);
+
+    expect(parsed.payload.chainId).toBe("solana:devnet");
+    expect(parsed.toMessage()).toBe(message);
+  });
+});
+
 describe(`Message Validation`, () => {
   Object.entries(validationPositiveEthereum).forEach(([test, value]) => {
     it(`Validates message successfully - ethereum : ${test}`, async () => {

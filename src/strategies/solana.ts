@@ -6,12 +6,14 @@ import { Payload, Signature, VerifyParams } from "../types";
 import { SIWBase } from "./base";
 
 const SOLANA_ADDRESS_PATTERN = "[a-zA-Z0-9]{32,44}";
+const SOLANA_CHAIN_ID_PATTERN = "[0-9]+|mainnet|testnet|devnet|localnet|solana:mainnet|solana:testnet|solana:devnet|solana:localnet";
+const parseSolanaChainId = (chainId: string): number | string => (/^[0-9]+$/.test(chainId) ? Number(chainId) : chainId);
 
 export class SIWS extends SIWBase {
   readonly chainName = "Solana";
 
   protected parseMessage(msg: string): ParsedMessageFields {
-    return parseMessage("Solana", SOLANA_ADDRESS_PATTERN, msg);
+    return parseMessage("Solana", SOLANA_ADDRESS_PATTERN, msg, SOLANA_CHAIN_ID_PATTERN, parseSolanaChainId);
   }
 
   protected async verifySignature(message: string, payload: Payload, signature: Signature, _params?: VerifyParams): Promise<boolean> {

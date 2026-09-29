@@ -36,7 +36,7 @@ export class Payload {
 
   /** Chain ID to which the session is bound, and the network where
    * Contract Accounts must be resolved. */
-  chainId?: number;
+  chainId?: number | string;
 
   /** Randomized token used to prevent replay attacks, at least 8 alphanumeric
    * characters. */
