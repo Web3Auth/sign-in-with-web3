@@ -13,12 +13,12 @@ const lint = typescriptLintPreset();
 export default defineConfig({
   pack: {
     ...preset.pack,
+    dts: true,
     format: {
       esm: { outDir: "dist/lib.esm" },
       cjs: { outDir: "dist/lib.cjs" },
     },
     outExtensions: () => ({ js: ".js", dts: ".d.ts" }),
-    copy: [{ from: "dist/lib.cjs/index.d.ts", to: "dist/lib.cjs/types" }],
     hash: false,
     exports: false,
   },
