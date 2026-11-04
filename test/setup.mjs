@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-import register from "@babel/register";
-import config from "@toruslabs/config/babel-test.config.js";
-
-register(config);
+// Mocha still loads this file through .mocharc.json.
+// The Vitest suite does not. @toruslabs/config@5 no longer ships a Babel config.
+export {};

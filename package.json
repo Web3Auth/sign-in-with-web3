@@ -10,9 +10,9 @@
   "sideEffects": false,
   "scripts": {
     "release": "torus-scripts release",
-    "build": "torus-scripts build",
-    "lint": "torus-scripts lint",
-    "test": "vitest run --config test/configs/browsers.config.mts --coverage"
+    "build": "vp pack",
+    "lint": "vp check",
+    "test": "vp test run --config test/configs/browsers.config.mts --coverage"
   },
   "repository": {
     "type": "git",
@@ -32,30 +32,30 @@
     "viem": "^2.57.0"
   },
   "devDependencies": {
-    "@babel/register": "^7.28.6",
-    "@toruslabs/config": "^4.0.1",
-    "@toruslabs/eslint-config-typescript": "^5.0.2",
-    "@toruslabs/torus-scripts": "^8.1.0",
+    "@toruslabs/config": "^5.0.0",
+    "@toruslabs/oxlint-config-typescript": "^1.0.0",
+    "@toruslabs/torus-scripts": "^9.0.0",
     "@types/node": "^25",
     "@types/valid-url": "^1.0.7",
-    "@vitest/browser": "^4.1.0",
-    "@vitest/browser-playwright": "^4.1.0",
-    "@vitest/coverage-istanbul": "^4.1.0",
+    "@vitest/browser-playwright": "5.1.0",
+    "@vitest/coverage-istanbul": "5.1.0",
     "cross-env": "^10.1.0",
-    "eslint": "^9.39.3",
     "loglevel": "^1.9.2",
     "playwright": "^1.63.0",
-    "prettier": "^3.9.9",
     "rimraf": "^6.1.3",
     "tsx": "^4.23.15",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "typescript": "^7.0.2",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.5.0",
+    "vite-plus": "1.5.0",
+    "vitest": "5.1.0"
   },
   "files": [
     "dist"
   ],
   "overrides": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.5.0",
+    "vitest": "5.1.0"
   },
   "engines": {
     "node": ">=24.22.0",

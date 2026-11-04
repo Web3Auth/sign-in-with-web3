@@ -12,13 +12,29 @@ const RESOURCES = `(\\nResources:(?<resources>(\\n- ${URI}?)+))?`;
 
 const CHAIN_DETECT = "sign in with your (?<chain>([^*]+)) account:";
 
-export function getChainFromMessage(msg: string) {
+function group(match: RegExpExecArray, name: string): string | undefined {
+  return match.groups?.[name];
+}
+
+function requiredGroup(match: RegExpExecArray, name: string): string {
+  const value = group(match, name);
+  if (value === undefined) {
+    throw new Error("Message did not match the regular expression.");
+  }
+  return value;
+}
+
+function optionalGroup(match: RegExpExecArray, name: string): string | null {
+  return group(match, name) ?? null;
+}
+
+export function getChainFromMessage(msg: string): string {
   const REGEX = new RegExp(CHAIN_DETECT, "g");
   const match = REGEX.exec(msg);
   if (!match) {
     throw new Error("Message did not match the regular expression.");
   }
-  return match?.groups?.chain;
+  return requiredGroup(match, "chain");
 }
 
 export interface ParsedMessageFields {
@@ -56,18 +72,18 @@ export function parseMessage(
     throw new Error("Message did not match the regular expression.");
   }
   return {
-    scheme: match?.groups?.scheme,
-    domain: match?.groups?.domain,
-    address: match?.groups?.address,
-    statement: match?.groups?.statement,
-    uri: match?.groups?.uri,
-    version: match?.groups?.version,
-    chainId: parseChainId(match?.groups?.chainId),
-    nonce: match?.groups?.nonce,
-    issuedAt: match?.groups?.issuedAt,
-    expirationTime: match?.groups?.expirationTime,
-    notBefore: match?.groups?.notBefore,
-    requestId: match?.groups?.requestId,
-    resources: match?.groups?.resources?.split("\n- ")?.slice(1) ?? null,
+    scheme: optionalGroup(match, "scheme"),
+    domain: requiredGroup(match, "domain"),
+    address: requiredGroup(match, "address"),
+    statement: optionalGroup(match, "statement"),
+    uri: requiredGroup(match, "uri"),
+    version: requiredGroup(match, "version"),
+    chainId: parseChainId(requiredGroup(match, "chainId")),
+    nonce: requiredGroup(match, "nonce"),
+    issuedAt: requiredGroup(match, "issuedAt"),
+    expirationTime: optionalGroup(match, "expirationTime"),
+    notBefore: optionalGroup(match, "notBefore"),
+    requestId: optionalGroup(match, "requestId"),
+    resources: group(match, "resources")?.split("\n- ").slice(1) ?? null,
   };
 }

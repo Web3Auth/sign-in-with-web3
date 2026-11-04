@@ -1,7 +1,7 @@
 export class SignatureMeta {}
 
 export class Signature {
-  t: string; // signature scheme
+  t!: string; // signature scheme
 
   m?: SignatureMeta; // signature related metadata (optional)
 
@@ -11,7 +11,7 @@ export class Signature {
 
 export class Header {
   /** specifies format of the payload. */
-  t: string;
+  t!: string;
 }
 
 export class Payload {
@@ -19,20 +19,20 @@ export class Payload {
   scheme?: string;
 
   /** RFC 4501 dns authority that is requesting the signing. */
-  domain: string;
+  domain!: string;
 
   /** Wallet address performing the signing */
-  address: string;
+  address!: string;
 
   /** Human-readable ASCII assertion that the user will sign, and it must not contain newline characters. */
   statement?: string;
 
   /** RFC 3986 URI referring to the resource that is the subject of the signing
    *  (as in the __subject__ of a claim). */
-  uri: string;
+  uri!: string;
 
   /** Current version of the message. */
-  version: string;
+  version!: string;
 
   /** Chain ID to which the session is bound, and the network where
    * Contract Accounts must be resolved. */
@@ -40,10 +40,10 @@ export class Payload {
 
   /** Randomized token used to prevent replay attacks, at least 8 alphanumeric
    * characters. */
-  nonce: string;
+  nonce!: string;
 
   /** ISO 8601 datetime string of the current time. */
-  issuedAt: string;
+  issuedAt!: string;
 
   /** ISO 8601 datetime string that, if present, indicates when the signed
    * authentication message is no longer valid. */

@@ -1,7 +1,7 @@
 import { ed25519 } from "@noble/curves/ed25519.js";
 import { base58 } from "@scure/base";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "vite-plus/test";
 
 import { ErrorTypes, ethereumStrategy, Signature, SIWWeb3, solanaStrategy } from "../src/index";
 import { parseMessage } from "../src/regex";
@@ -115,7 +115,7 @@ describe(`Message Validation`, () => {
         const msg = new SIWWeb3({ payload, chain, header });
         return msg.verify(payload, signature, { issuedAtMaxAgeMs: 0 });
       })().catch((e: Error) => e);
-      const errorType = result instanceof Error ? result.message : result.error.type;
+      const errorType = result instanceof Error ? result.message : result.error?.type;
       expect(Object.values(ErrorTypes) as string[]).toContain(errorType);
     });
   });
@@ -127,7 +127,7 @@ describe(`Message Validation`, () => {
         const msg = new SIWWeb3({ payload, chain, header });
         return msg.verify(payload, signature, { issuedAtMaxAgeMs: 0 });
       })().catch((e: Error) => e);
-      const errorType = result instanceof Error ? result.message : result.error.type;
+      const errorType = result instanceof Error ? result.message : result.error?.type;
       expect(Object.values(ErrorTypes) as string[]).toContain(errorType);
     });
   });
@@ -207,6 +207,9 @@ describe(`Round Trip Ethereum`, () => {
 describe(`Malformed Solana input`, () => {
   it(`Returns verification failure for malformed signature`, async () => {
     const firstSolana = Object.values(parsingPositiveSolana)[0];
+    if (!firstSolana) {
+      throw new Error("Missing Solana parsing fixture");
+    }
     const { payload, chain, header } = firstSolana.fields;
     const msg = new SIWWeb3({ payload, chain, header });
     const signature = new Signature();
@@ -218,6 +221,9 @@ describe(`Malformed Solana input`, () => {
 
   it(`Returns verification failure for malformed address`, async () => {
     const firstSolana = Object.values(parsingPositiveSolana)[0];
+    if (!firstSolana) {
+      throw new Error("Missing Solana parsing fixture");
+    }
     const { payload, chain, header } = firstSolana.fields;
     payload.address = "!!!invalid-base58!!!";
     const msg = new SIWWeb3({ payload, chain, header });
