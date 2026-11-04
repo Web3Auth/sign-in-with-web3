@@ -2,7 +2,7 @@ import { ethereumStrategy, Payload as SIWPayload, SIWWeb3 } from '@web3auth/sign
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import Web3 from 'web3';
-import EthereumLogo from '../public/ethereum-logo.png';
+const EthereumLogo = "/ethereum-logo.png";
 
 SIWWeb3.registerStrategy(ethereumStrategy);
 

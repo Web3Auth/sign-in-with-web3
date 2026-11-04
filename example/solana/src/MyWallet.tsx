@@ -11,7 +11,7 @@ SIWWeb3.registerStrategy(solanaStrategy);
 import bs58 from 'bs58';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
-import SolanaLogo from '../public/solana-logo.png';
+const SolanaLogo = "/solana-logo.png";
 
 const MyWallet: React.FC = () => {
     const { connection } = useConnection();
