@@ -28,7 +28,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: "24.x"
+          node-version: "24.22.0"
       - name: Install npm 12
         run: npm install --global npm@12.2.0
       - name: Install dependencies
