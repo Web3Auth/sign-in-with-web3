@@ -8,23 +8,27 @@
   },
   "files": [
     "src",
-    ".editorconfig",
+    "public",
+    "index.html",
+    "vite.config.mts",
     ".eslintignore",
-    ".eslintrc.json",
-    ".gitignore",
+    ".eslintrc",
     ".prettierignore",
-    ".prettierrc",
-    "LICENSE",
     "package.json",
     "tsconfig.json"
   ],
+  "engines": {
+    "node": ">=24.22.0",
+    "npm": ">=12"
+  },
   "scripts": {
     "clean": "shx rm -rf dist",
     "build": "vite build",
     "start": "vite",
+    "typecheck": "tsc --noEmit",
     "fmt": "prettier --write '{*,**/*}.{js,ts,jsx,tsx,json}'",
-    "lint": "eslint . && prettier --check '{*,**/*}.{js,ts,jsx,tsx,json}'",
-    "lint:fix": "eslint --fix . && npm fmt",
+    "lint": "oxlint src vite.config.mts && prettier --check '{*,**/*}.{js,ts,jsx,tsx,json}'",
+    "lint:fix": "oxlint src vite.config.mts --fix && npm run fmt",
     "nuke": "shx rm -rf node_modules package.lock"
   },
   "dependencies": {
@@ -48,6 +52,7 @@
     "@typescript-eslint/parser": "^5.14.0",
     "@vitejs/plugin-react": "^6.2.1",
     "eslint": "^8.11.0",
+    "oxlint": "^1.91.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.3",
@@ -55,7 +60,7 @@
     "prettier": "^2.5.1",
     "shx": "^0.3.4",
     "tslib": "^2.3.1",
-    "typescript": "^4.5.4",
+    "typescript": "^7.0.2",
     "vite": "^8.3.5",
     "vite-plugin-node-polyfills": "^0.28.0"
   }
