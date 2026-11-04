@@ -1,9 +1,12 @@
 name: Build & Release
 
-on: [push]
+on:
+  push:
+  pull_request:
 
 jobs:
   test:
+    if: github.event_name == 'push'
     strategy:
       matrix:
         node: ["24.x"]
@@ -43,3 +46,33 @@ jobs:
 
       - name: Run tests
         run: npx playwright install && npm run test
+
+  release-notes:
+    if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24.x"
+          cache: "npm"
+
+      - name: Use npm 12
+        run: npm install -g npm@12
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check release notes
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch --no-tags origin "${BASE_REF}:refs/remotes/origin/${BASE_REF}"
+          npm exec -- changeset status --since="origin/${BASE_REF}"
