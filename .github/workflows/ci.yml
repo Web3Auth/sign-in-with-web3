@@ -26,8 +26,14 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: "npm"
 
+      - name: Use npm 12
+        run: npm install -g npm@12
+
       - name: Install dependencies
         run: npm install
+
+      - name: Harden check
+        run: npx harden check --level moderate -p npm
 
       - name: Run Build
         run: npm run build
