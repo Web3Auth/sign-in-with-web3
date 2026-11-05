@@ -46,7 +46,7 @@ jobs:
         run: npm run lint
 
       - name: Check TypeScript projects
-        run: npm run typecheck
+        run: npm run type-check
 
       - name: Run Build
         run: npm run build
