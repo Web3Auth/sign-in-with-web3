@@ -9,7 +9,9 @@ permissions:
 
 jobs:
   test:
-    if: github.event_name == 'push'
+    # A push already runs this job for a same-repo branch. A fork pull request
+    # does not, so run it there too.
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
     strategy:
       matrix:
         node: ["24.22.0", "26"]
