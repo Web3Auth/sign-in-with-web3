@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Harden check
-        run: npx harden check --level moderate -p npm
+        run: npm exec -- harden check --level moderate -p npm
 
       - name: Check format, lint, and types
         run: npm run lint
@@ -48,10 +48,10 @@ jobs:
         run: npm run build
 
       - name: Install playwright webkit
-        run: npx playwright install-deps webkit
+        run: npm exec -- playwright install-deps webkit
 
       - name: Run tests
-        run: npx playwright install && npm run test
+        run: npm exec -- playwright install && npm run test
 
   release-notes:
     if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
