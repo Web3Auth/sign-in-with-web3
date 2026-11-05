@@ -5,11 +5,11 @@ import { ParsedMessageFields } from "../regex";
 import { ErrorTypes, Header, Payload, Signature, SignInWithWeb3Error, SignInWithWeb3Response, VerifyParams } from "../types";
 
 export abstract class SIWBase {
-  header: Header;
+  header!: Header;
 
-  payload: Payload;
+  payload!: Payload;
 
-  signature: Signature;
+  signature!: Signature;
 
   abstract readonly chainName: string;
 
@@ -17,19 +17,19 @@ export abstract class SIWBase {
     if (typeof param === "string") {
       const parsed = this.parseMessage(param);
       this.payload = {
-        scheme: parsed.scheme,
+        scheme: parsed.scheme ?? undefined,
         domain: parsed.domain,
         address: parsed.address,
-        statement: parsed.statement,
+        statement: parsed.statement ?? undefined,
         uri: parsed.uri,
         version: parsed.version,
         nonce: parsed.nonce,
         issuedAt: parsed.issuedAt,
-        expirationTime: parsed.expirationTime,
-        notBefore: parsed.notBefore,
-        requestId: parsed.requestId,
+        expirationTime: parsed.expirationTime ?? undefined,
+        notBefore: parsed.notBefore ?? undefined,
+        requestId: parsed.requestId ?? undefined,
         chainId: parsed.chainId,
-        resources: parsed.resources,
+        resources: parsed.resources ?? undefined,
       };
     } else {
       Object.assign(this, param);

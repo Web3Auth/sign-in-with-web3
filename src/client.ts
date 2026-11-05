@@ -11,15 +11,15 @@ export interface Strategy {
 export class SIWWeb3 {
   private static strategies = new Map<string, Strategy>();
 
-  header: Header;
+  header!: Header;
 
-  signature: Signature;
+  signature!: Signature;
 
-  chain: string;
+  chain!: string;
 
-  payload: Payload;
+  payload!: Payload;
 
-  private instance: SIWBase;
+  private instance!: SIWBase;
 
   constructor(param: Partial<SIWWeb3> | string) {
     if (typeof param === "string") {
@@ -41,8 +41,10 @@ export class SIWWeb3 {
     this.instance = strategy.create({ header: param.header, payload: param.payload, signature: param.signature });
     this.chain = chain.toLowerCase();
     this.payload = this.instance.payload;
-    this.header = this.instance.header || param.header;
-    this.signature = this.instance.signature || param.signature;
+    const header = this.instance.header ?? param.header;
+    const signature = this.instance.signature ?? param.signature;
+    if (header) this.header = header;
+    if (signature) this.signature = signature;
   }
 
   static registerStrategy(strategy: Strategy): void {

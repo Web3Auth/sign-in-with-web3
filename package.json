@@ -6,13 +6,14 @@
   "module": "dist/lib.esm/index.js",
   "unpkg": "dist/lib.esm/index.js",
   "jsdelivr": "dist/lib.esm/index.js",
-  "types": "dist/lib.cjs/types/index.d.ts",
+  "types": "dist/lib.cjs/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "release": "torus-scripts release",
-    "build": "torus-scripts build",
-    "lint": "torus-scripts lint",
-    "test": "vitest run --config test/configs/browsers.config.mts --coverage"
+    "version-packages": "changeset version && npm install --package-lock-only --ignore-scripts",
+    "release": "changeset publish",
+    "build": "vp pack",
+    "lint": "vp check",
+    "test": "vp test run --config test/configs/browsers.config.mts --coverage"
   },
   "repository": {
     "type": "git",
@@ -32,33 +33,32 @@
     "viem": "^2.57.0"
   },
   "devDependencies": {
-    "@babel/register": "^7.28.6",
-    "@toruslabs/config": "^4.0.1",
-    "@toruslabs/eslint-config-typescript": "^5.0.2",
-    "@toruslabs/torus-scripts": "^8.1.0",
-    "@types/node": "^25",
+    "@changesets/cli": "^3.0.3",
+    "@lavamoat/harden": "^0.8.1",
+    "@toruslabs/config": "^5.0.0",
+    "@toruslabs/oxlint-config-typescript": "^1.1.0",
+    "@toruslabs/torus-scripts": "^9.0.1",
+    "@types/node": "^26",
     "@types/valid-url": "^1.0.7",
-    "@vitest/browser": "^4.1.0",
-    "@vitest/browser-playwright": "^4.1.0",
-    "@vitest/coverage-istanbul": "^4.1.0",
-    "cross-env": "^10.1.0",
-    "eslint": "^9.39.3",
-    "loglevel": "^1.9.2",
+    "@vitest/browser-playwright": "5.1.0",
+    "@vitest/coverage-istanbul": "5.1.0",
     "playwright": "^1.63.0",
-    "prettier": "^3.9.9",
-    "rimraf": "^6.1.3",
-    "tsx": "^4.23.15",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.0"
+    "typescript": "^7.0.2",
+    "vite-plus": "^1.5.0"
   },
   "files": [
     "dist"
   ],
-  "overrides": {
-    "esbuild": "^0.25.0"
-  },
   "engines": {
-    "node": ">=22.x",
-    "npm": ">=10.x"
-  }
+    "node": ">=24.22.0",
+    "npm": ">=12"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.17.0",
+      "onFail": "error"
+    }
+  },
+  "allowScripts": {}
 }

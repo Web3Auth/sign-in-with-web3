@@ -1,12 +1,18 @@
 name: Build & Release
 
-on: [push]
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   test:
+    if: github.event_name == 'push'
     strategy:
       matrix:
-        node: ["24.x"]
+        node: ["24.22.0", "26"]
         os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
@@ -18,16 +24,25 @@ jobs:
           enabled: ${{ vars.WIZ_SENSOR_ENABLED }}
           token: ${{ secrets.WIZ_SENSOR_TOKEN }}
       - name: Check out Git repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: ${{ matrix.node }}
           cache: "npm"
 
+      - name: Use npm 12
+        run: npm install --global npm@12.2.0
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Harden check
+        run: npx harden check --level moderate -p npm
+
+      - name: Check format, lint, and types
+        run: npm run lint
 
       - name: Run Build
         run: npm run build
@@ -37,3 +52,33 @@ jobs:
 
       - name: Run tests
         run: npx playwright install && npm run test
+
+  release-notes:
+    if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: "24.22.0"
+          cache: "npm"
+
+      - name: Use npm 12
+        run: npm install --global npm@12.2.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check release notes
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git fetch --no-tags origin "${BASE_REF}:refs/remotes/origin/${BASE_REF}"
+          npm exec -- changeset status --since="origin/${BASE_REF}"

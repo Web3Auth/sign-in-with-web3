@@ -9,7 +9,6 @@ Sign-In with Web3 uses a standard message format compliant with [CAIP-74](https:
 - **Ethereum** — [EIP-4361](https://eips.ethereum.org/EIPS/eip-4361) with EIP-1271/6492 smart contract signature support
 - **Solana** — [SIP-99](https://github.com/AdrenaFoundation/SIPs/blob/main/SIPS/sip-99.md) with ed25519 signature verification
 
-
 ## Installation
 
 ```bash
@@ -93,15 +92,15 @@ src/
 
 ## Exports
 
-| Export | Description |
-|---|---|
-| `SIWWeb3` | Main class with chain auto-detection and strategy registry |
-| `SIWBase` | Abstract base class for building custom chain strategies |
-| `SIWE` | Ethereum sign-in (EIP-4361) |
-| `SIWS` | Solana sign-in (SIP-99) |
-| `ethereumStrategy` | Ethereum strategy for registry |
-| `solanaStrategy` | Solana strategy for registry |
-| `eipVerifyMessage` | EIP-1271/6492 signature verification utility |
+| Export             | Description                                                |
+| ------------------ | ---------------------------------------------------------- |
+| `SIWWeb3`          | Main class with chain auto-detection and strategy registry |
+| `SIWBase`          | Abstract base class for building custom chain strategies   |
+| `SIWE`             | Ethereum sign-in (EIP-4361)                                |
+| `SIWS`             | Solana sign-in (SIP-99)                                    |
+| `ethereumStrategy` | Ethereum strategy for registry                             |
+| `solanaStrategy`   | Solana strategy for registry                               |
+| `eipVerifyMessage` | EIP-1271/6492 signature verification utility               |
 
 ## Migration from `@web3auth/sign-in-with-ethereum` / `@web3auth/sign-in-with-solana`
 
@@ -116,6 +115,7 @@ These packages have been deprecated and consolidated into this package.
 ```
 
 Key changes from previous versions:
+
 - `SIWEthereum` has been renamed to `SIWE`
 - `network` property has been renamed to `chain`
 - `chain` is now required when constructing from an object

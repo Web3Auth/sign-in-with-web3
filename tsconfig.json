@@ -1,5 +1,8 @@
 {
-  "extends": "@toruslabs/config/tsconfig.default.json",
-  "include": ["src", "test"],
+  "extends": "@toruslabs/config/tsconfig.library.json",
+  "compilerOptions": {
+    "rootDir": "."
+  },
+  "include": ["src", "test", "vite.config.mts"],
   "exclude": ["node_modules", "dist"]
 }
