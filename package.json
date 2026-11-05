@@ -38,15 +38,13 @@
     "@toruslabs/config": "^5.0.0",
     "@toruslabs/oxlint-config-typescript": "^1.1.0",
     "@toruslabs/torus-scripts": "^9.0.1",
-    "@types/node": "^25",
+    "@types/node": "^26",
     "@types/valid-url": "^1.0.7",
     "@vitest/browser-playwright": "5.1.0",
     "@vitest/coverage-istanbul": "5.1.0",
     "playwright": "^1.63.0",
     "typescript": "^7.0.2",
-    "vite": "npm:@voidzero-dev/vite-plus-core@1.5.0",
-    "vite-plus": "^1.5.0",
-    "vitest": "5.1.0"
+    "vite-plus": "^1.5.0"
   },
   "files": [
     "dist"

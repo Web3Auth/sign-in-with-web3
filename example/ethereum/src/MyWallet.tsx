@@ -5,7 +5,8 @@ import {
 } from "@web3auth/sign-in-with-web3";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import Web3 from "web3";
+import { createWalletClient, custom, type Address } from "viem";
+import { mainnet } from "viem/chains";
 const EthereumLogo = "/ethereum-logo.png";
 
 SIWWeb3.registerStrategy(ethereumStrategy);
@@ -46,20 +47,23 @@ const MyWallet: React.FC = () => {
 
   async function connectWallet() {
     try {
-      setProvider(detectCurrentProvider());
-      if (currentProvider) {
-        if (currentProvider !== window.ethereum) {
+      const provider = detectCurrentProvider();
+      setProvider(provider);
+      if (provider) {
+        if (provider !== window.ethereum) {
           Swal.fire(
             "Non-Ethereum browser detected. You should consider trying MetaMask!"
           );
         }
-        await currentProvider.request({ method: "eth_requestAccounts" });
-        const web3 = new Web3(currentProvider);
-        const userAccount = await web3.eth.getAccounts();
-        if (userAccount.length === 0) {
+        const client = createWalletClient({
+          chain: mainnet,
+          transport: custom(provider),
+        });
+        const [address] = await client.requestAddresses();
+        if (!address) {
           console.log("Please connect to meta mask");
         } else {
-          setPublicKey(userAccount[0]);
+          setPublicKey(address);
         }
       }
     } catch (err) {
@@ -88,15 +92,21 @@ const MyWallet: React.FC = () => {
     setNonce(message.payload.nonce);
     setSiwsMessage(message);
     const messageText = message.prepareMessage();
-    const web3 = new Web3(currentProvider);
-
-    web3.eth.personal.sign(messageText, publicKey, "", (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        setSignature(result);
-      }
+    const client = createWalletClient({
+      chain: mainnet,
+      transport: custom(currentProvider),
     });
+    client
+      .signMessage({
+        account: publicKey as Address,
+        message: messageText,
+      })
+      .then((result) => {
+        setSignature(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
