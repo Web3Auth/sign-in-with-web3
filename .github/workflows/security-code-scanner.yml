@@ -1,29 +1,27 @@
 name: Security code scanner
 
-# GitHub code scanning already runs CodeQL for this repository.
-# This workflow adds Semgrep once and does not start a second CodeQL analysis.
-
 on:
   pull_request:
   push:
     branches: [master]
   schedule:
     - cron: "17 4 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  semgrep:
-    runs-on: ubuntu-latest
+  security-scan:
+    uses: MetaMask/action-security-code-scanner/.github/workflows/security-scan.yml@becb242930b3cc271c26da0280050db9c157e291 # v2.1.1
     permissions:
+      actions: read
       contents: read
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
-        with:
-          python-version: "3.12"
-      - name: Install Semgrep OSS
-        run: python -m pip install 'setuptools<81' semgrep==1.183.0
-      - name: Scan JavaScript and TypeScript
-        run: semgrep scan --error --config p/javascript --config p/typescript --exclude '**/node_modules/**' --exclude '**/dist/**' --exclude '**/build/**' --exclude '**/coverage/**' .
+      security-events: write
+    with:
+      scanner-ref: becb242930b3cc271c26da0280050db9c157e291 # v2.1.1
+      paths-ignored: |
+        **/node_modules/**
+        **/dist/**
+        **/build/**
+        **/coverage/**

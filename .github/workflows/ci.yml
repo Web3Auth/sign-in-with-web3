@@ -41,6 +41,9 @@ jobs:
       - name: Harden check
         run: npx harden check --level moderate -p npm
 
+      - name: Check format, lint, and types
+        run: npm run lint
+
       - name: Run Build
         run: npm run build
 
