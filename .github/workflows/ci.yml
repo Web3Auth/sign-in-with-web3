@@ -2,6 +2,8 @@ name: Build & Release
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 permissions:
@@ -9,7 +11,6 @@ permissions:
 
 jobs:
   test:
-    if: github.event_name == 'push'
     strategy:
       matrix:
         node: ["24.22.0", "26"]
@@ -39,19 +40,22 @@ jobs:
         run: npm ci
 
       - name: Harden check
-        run: npx harden check --level moderate -p npm
+        run: npm exec -- harden check --level moderate -p npm
 
       - name: Check format, lint, and types
         run: npm run lint
+
+      - name: Check TypeScript projects
+        run: npm run type-check
 
       - name: Run Build
         run: npm run build
 
       - name: Install playwright webkit
-        run: npx playwright install-deps webkit
+        run: npm exec -- playwright install-deps webkit
 
       - name: Run tests
-        run: npx playwright install && npm run test
+        run: npm exec -- playwright install && npm run test
 
   release-notes:
     if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'changeset-release/')

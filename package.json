@@ -13,6 +13,7 @@
     "release": "changeset publish",
     "build": "vp pack",
     "lint": "vp check",
+    "type-check": "tsc --noEmit",
     "test": "vp test run --config test/configs/browsers.config.mts --coverage"
   },
   "repository": {
