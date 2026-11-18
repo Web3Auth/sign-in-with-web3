@@ -327,6 +327,8 @@ describe("ReDoS resistance", () => {
       [
         "a.com wants you to sign in with your Ethereum account:",
         "0x0000000000000000000000000000000000000000",
+        // No statement needs the second blank line, or parsing fails before Resources.
+        "",
         "",
         "URI: https://a.com",
         "Version: 1",
