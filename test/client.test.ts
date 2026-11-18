@@ -320,3 +320,40 @@ describe(`issuedAt max-age`, () => {
     expect(result.success).toBe(true);
   });
 });
+
+describe("ReDoS resistance", () => {
+  it("rejects a crafted Resources list without catastrophic backtracking", () => {
+    const message =
+      [
+        "a.com wants you to sign in with your Ethereum account:",
+        "0x0000000000000000000000000000000000000000",
+        "",
+        "URI: https://a.com",
+        "Version: 1",
+        "Chain ID: 1",
+        "Nonce: aaaaaaaa",
+        "Issued At: 2026-01-01T00:00:00Z",
+        "Resources:",
+        ...Array(40).fill("- a"),
+      ].join("\n") + "\n#\nx";
+    const start = Date.now();
+    expect(() => new SIWWeb3(message)).toThrow();
+    expect(Date.now() - start).toBeLessThan(1000);
+  });
+
+  it("rejects an oversized issuedAt without quadratic backtracking", () => {
+    const payload = {
+      domain: "a.com",
+      address: "0x0000000000000000000000000000000000000000",
+      uri: "https://a.com",
+      version: "1",
+      chainId: 1,
+      nonce: "aaaaaaaa",
+      issuedAt: "1".repeat(100000),
+    };
+    const msg = new SIWWeb3({ payload, chain: "Ethereum" });
+    const start = Date.now();
+    expect(() => msg.toMessage()).toThrow(ErrorTypes.INVALID_TIME_FORMAT);
+    expect(Date.now() - start).toBeLessThan(1000);
+  });
+});
