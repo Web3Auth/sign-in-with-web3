@@ -1,5 +1,5 @@
 const STATEMENT = "((?<statement>[^\\n]+)\\n)?";
-const URI = "(([^:?#\\n]+):)?([^?#\\n]*)(\\?([^#\\n]*))?(#(.*))";
+const URI = "[^\\n]*";
 const URI_LINE = `\\nURI: (?<uri>${URI}?)`;
 const VERSION = "\\nVersion: (?<version>1)";
 const NONCE = "\\nNonce: (?<nonce>[a-zA-Z0-9]{8,})";

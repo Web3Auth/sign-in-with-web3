@@ -336,7 +336,7 @@ describe("ReDoS resistance", () => {
         "Nonce: aaaaaaaa",
         "Issued At: 2026-01-01T00:00:00Z",
         "Resources:",
-        ...Array(40).fill("- a"),
+        ...Array(40).fill("- https://a.com"),
       ].join("\n") + "\n#\nx";
     const start = Date.now();
     expect(() => new SIWWeb3(message)).toThrow();
